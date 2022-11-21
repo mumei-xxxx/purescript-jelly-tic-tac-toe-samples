@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "bundle:scss": "sass ./src/index.scss ./public/index.css",
     "watch:script": "npx spago bundle-app -t ./public/index.js -w",
+    "watch:scss": "sass --watch ./src/index.scss ./public/index.css",
     "watch:server": "npx live-server ./public",
     "watch": "run-p watch:*"
   },
@@ -21,10 +23,11 @@
   "homepage": "https://github.com/mumei-xxxx/purescript-sanmoku-dev0#readme",
   "dependencies": {
     "esbuild": "^0.15.14",
-    "live-server": "^1.2.2",
+    "live-server": "^1.1.0",
     "npm-run-all": "^4.1.5",
     "purescript": "^0.15.6",
     "purs-tidy": "^0.9.2",
+    "sass": "^1.56.1",
     "spago": "^0.20.9"
   }
 }
