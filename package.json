@@ -16,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/mumei-xxxx/purescript-sanmoku-dev0/issues"
   },
-  "homepage": "https://github.com/mumei-xxxx/purescript-sanmoku-dev0#readme"
+  "homepage": "https://github.com/mumei-xxxx/purescript-sanmoku-dev0#readme",
+  "dependencies": {
+    "esbuild": "^0.15.14",
+    "purescript": "^0.15.6",
+    "purs-tidy": "^0.9.2",
+    "spago": "^0.20.9"
+  }
 }
