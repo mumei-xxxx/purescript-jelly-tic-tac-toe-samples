@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "bundle:scss": "sass ./src/index.scss ./public/index.css",
+    "bundle:script": "npx spago bundle-app -t ./public/index.js -y",
+    "bundle:scss": "sass --error-css --style=compressed ./src/index.scss ./public/index.css",
+    "bundle": "run-s bundle:*",
     "watch:script": "npx spago bundle-app -t ./public/index.js -w",
-    "watch:scss": "sass --watch ./src/index.scss ./public/index.css",
+    "watch:scss": "sass --watch --error-css ./src/index.scss ./public/index.css",
     "watch:server": "npx live-server ./public",
     "watch": "run-p watch:*"
   },
