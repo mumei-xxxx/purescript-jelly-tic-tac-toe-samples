@@ -7,7 +7,7 @@ import Effect (Effect)
 import Effect.Aff (launchAff_)
 import Effect.Class (liftEffect)
 import Jelly.Aff (awaitBody)
-import Jelly.Component (class Component, text)
+import Jelly.Component (class Component, rawSig, text, textSig)
 import Jelly.Element as JE
 import Jelly.Hooks (runHooks_)
 import Jelly.Hydrate (mount)
@@ -24,7 +24,10 @@ import Jelly.Signal (Signal)
 --   JE.button [ "class" := "square", onClick \_ -> onClick ] do
 --     textSig value
 
-squareComponent :: forall m. Component m => m Unit
-squareComponent = do
+type SquarePropsType m =
+  { value :: Signal Int }
+
+squareComponent :: forall m. Component m => SquarePropsType m -> m Unit
+squareComponent { value } = do
   JE.button [ "class" := "square" ] do
-    text "a"
+    textSig $ show <$> value
