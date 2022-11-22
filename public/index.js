@@ -2658,40 +2658,41 @@
   };
 
   // output/Jelly.Element/index.js
-  var h1$prime = function(dictComponent) {
-    return el$prime(dictComponent)("h1");
-  };
   var div$prime = function(dictComponent) {
     return el$prime(dictComponent)("div");
   };
   var div2 = function(dictComponent) {
     return el(dictComponent)("div");
   };
+  var button = function(dictComponent) {
+    return el(dictComponent)("button");
+  };
 
   // output/Square/index.js
+  var attr2 = /* @__PURE__ */ attr(attrValueString);
   var squareComponent = function(dictComponent) {
-    return h1$prime(dictComponent)(text(dictComponent)("fujita fujita"));
+    return button(dictComponent)([attr2("class")("square")])(text(dictComponent)("a"));
   };
 
   // output/Board/index.js
   var discard3 = /* @__PURE__ */ discard(discardUnit);
-  var attr2 = /* @__PURE__ */ attr(attrValueString);
+  var attr3 = /* @__PURE__ */ attr(attrValueString);
   var boardComponent = function(dictComponent) {
     var discard1 = discard3(dictComponent.MonadHooks0().MonadEffect0().Monad0().Bind1());
     var div$prime2 = div$prime(dictComponent);
     var div3 = div2(dictComponent);
     var squareComponent2 = squareComponent(dictComponent);
-    return discard1(div$prime2(div3([attr2("class")("board-row")])(discard1(squareComponent2)(function() {
+    return discard1(div$prime2(div3([attr3("class")("board-row")])(discard1(squareComponent2)(function() {
       return discard1(squareComponent2)(function() {
         return squareComponent2;
       });
     }))))(function() {
-      return discard1(div$prime2(div3([attr2("class")("board-row")])(discard1(squareComponent2)(function() {
+      return discard1(div$prime2(div3([attr3("class")("board-row")])(discard1(squareComponent2)(function() {
         return discard1(squareComponent2)(function() {
           return squareComponent2;
         });
       }))))(function() {
-        return div$prime2(div3([attr2("class")("board-row")])(discard1(squareComponent2)(function() {
+        return div$prime2(div3([attr3("class")("board-row")])(discard1(squareComponent2)(function() {
           return discard1(squareComponent2)(function() {
             return squareComponent2;
           });
@@ -3325,22 +3326,19 @@
   };
 
   // output/Main/index.js
-  var attr3 = /* @__PURE__ */ attr(attrValueString);
-  var discard6 = /* @__PURE__ */ discard(discardUnit);
+  var attr4 = /* @__PURE__ */ attr(attrValueString);
   var liftEffect6 = /* @__PURE__ */ liftEffect(monadEffectAff);
   var traverse_2 = /* @__PURE__ */ traverse_(applicativeEffect)(foldableMaybe);
   var component = function(dictComponent) {
-    var boardComponent2 = boardComponent(dictComponent);
-    return div2(dictComponent)([attr3("class")("w-screen h-screen text-5xl flex justify-center items-center")])(discard6(dictComponent.MonadHooks0().MonadEffect0().Monad0().Bind1())(text(dictComponent)("Hello Jelly!"))(function() {
-      return boardComponent2;
-    }));
+    var div3 = div2(dictComponent);
+    return div3([attr4("class")("game")])(div3([attr4("class")("game-board")])(boardComponent(dictComponent)));
   };
   var component1 = /* @__PURE__ */ component(componentHydrateM);
   var main = /* @__PURE__ */ launchAff_(/* @__PURE__ */ bind(bindAff)(awaitBody)(function(bodyMaybe) {
     return liftEffect6(traverse_2(function() {
-      var $17 = mount(component1);
-      return function($18) {
-        return runHooks_($17($18));
+      var $10 = mount(component1);
+      return function($11) {
+        return runHooks_($10($11));
       };
     }())(bodyMaybe));
   }));

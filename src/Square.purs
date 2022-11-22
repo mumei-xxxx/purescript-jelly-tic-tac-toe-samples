@@ -26,5 +26,5 @@ import Jelly.Signal (Signal)
 
 squareComponent :: forall m. Component m => m Unit
 squareComponent = do
-  JE.h1' do
-    text "fujita fujita"
+  JE.button [ "class" := "square" ] do
+    text "a"

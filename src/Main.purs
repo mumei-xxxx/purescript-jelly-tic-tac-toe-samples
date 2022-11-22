@@ -23,6 +23,7 @@ main = launchAff_ do
 
 component :: forall m. Component m => m Unit
 component =
-  JE.div [ "class" := "w-screen h-screen text-5xl flex justify-center items-center" ] do
-    text "Hello Jelly!"
-    boardComponent
+  JE.div [ "class" := "game" ] do
+    JE.div [ "class" := "game-board" ] do
+      boardComponent
+    -- text "Hello Jelly!"
