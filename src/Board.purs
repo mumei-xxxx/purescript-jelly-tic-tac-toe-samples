@@ -16,6 +16,7 @@ import Jelly.Hydrate (mount)
 import Jelly.Prop ((:=))
 import Jelly.Signal (Signal)
 
+import Square (squareComponent)
 -- type SquarePropsType m =
 --   { value :: Signal SquareValueType
 --   , onClick :: m Unit
@@ -23,16 +24,29 @@ import Jelly.Signal (Signal)
 
 -- data SquareValueType = String
 
-type BoardPropsType m =
-  { value :: Signal String }
+-- type BoardPropsType m =
+--   { value :: Signal String }
 
-
--- boardComponent :: forall m. Component m => SquarePropsType m -> m Unit
--- boardComponent { value, onClick } = do
---   JE.button [ "class" := "square", onClick \_ -> onClick ] do
+-- boardComponent :: forall m. Component m => BoardPropsType m -> m Unit
+-- boardComponent { value } = do
+--   JE.button [ "class" := "square"] do
 --     textSig value
 
-boardComponent :: forall m. Component m => BoardPropsType m -> m Unit
-boardComponent { value } = do
-  JE.button [ "class" := "square"] do
-    textSig value
+
+boardComponent :: forall m. Component m => m Unit
+boardComponent = do
+  JE.div' do
+    JE.div [ "class" := "board-row" ] do
+      squareComponent
+      squareComponent
+      squareComponent
+  JE.div' do
+    JE.div [ "class" := "board-row" ] do
+      squareComponent
+      squareComponent
+      squareComponent
+  JE.div' do
+    JE.div [ "class" := "board-row" ] do
+      squareComponent
+      squareComponent
+      squareComponent

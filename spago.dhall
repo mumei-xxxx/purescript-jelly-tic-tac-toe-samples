@@ -18,6 +18,7 @@ to generate this file without the comments in this block.
   , "foldable-traversable"
   , "jelly"
   , "jelly-hooks"
+  , "jelly-signal"
   , "prelude"
   ]
 , packages = ./packages.dhall

@@ -12,6 +12,9 @@ import Jelly.Element as JE
 import Jelly.Hooks (runHooks_)
 import Jelly.Hydrate (mount)
 import Jelly.Prop ((:=))
+-- import Jelly.Signal (Signal)
+
+import Board (boardComponent)
 
 main :: Effect Unit
 main = launchAff_ do
@@ -22,3 +25,4 @@ component :: forall m. Component m => m Unit
 component =
   JE.div [ "class" := "w-screen h-screen text-5xl flex justify-center items-center" ] do
     text "Hello Jelly!"
+    boardComponent
