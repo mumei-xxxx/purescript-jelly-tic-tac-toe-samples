@@ -5,18 +5,18 @@ module Board
 
 import Prelude
 
-import Data.Foldable (traverse_)
-import Effect (Effect)
-import Effect.Aff (launchAff_)
-import Effect.Class (liftEffect)
-import Jelly.Aff (awaitBody)
-import Jelly.Component (class Component, text)
-import Jelly.Component (class Component, text, textSig)
+-- import Data.Foldable (traverse_)
+-- import Effect (Effect)
+-- import Effect.Aff (launchAff_)
+-- import Effect.Class (liftEffect)
+-- import Jelly.Aff (awaitBody)
+-- import Jelly.Component (class Component, text)
+import Jelly.Component (class Component, textSig)
 import Jelly.Element as JE
-import Jelly.Hooks (runHooks_)
-import Jelly.Hydrate (mount)
+-- import Jelly.Hooks (runHooks_)
+-- import Jelly.Hydrate (mount)
 import Jelly.Prop ((:=))
-import Jelly.Signal (Signal, newState)
+-- import Jelly.Signal (Signal, newState)
 -- import Signal.Hooks (newStateEq, useHooks_)
 import Square (squareComponent)
 
