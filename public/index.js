@@ -81,20 +81,20 @@
   };
   var applySecond = function(dictApply) {
     var apply1 = apply(dictApply);
-    var map8 = map(dictApply.Functor0());
+    var map9 = map(dictApply.Functor0());
     return function(a) {
       return function(b) {
-        return apply1(map8($$const(identity2))(a))(b);
+        return apply1(map9($$const(identity2))(a))(b);
       };
     };
   };
   var lift2 = function(dictApply) {
     var apply1 = apply(dictApply);
-    var map8 = map(dictApply.Functor0());
+    var map9 = map(dictApply.Functor0());
     return function(f) {
       return function(a) {
         return function(b) {
-          return apply1(map8(f)(a))(b);
+          return apply1(map9(f)(a))(b);
         };
       };
     };
@@ -198,6 +198,19 @@
   var bottomChar = String.fromCharCode(0);
   var topNumber = Number.POSITIVE_INFINITY;
   var bottomNumber = Number.NEGATIVE_INFINITY;
+
+  // output/Data.Show/foreign.js
+  var showIntImpl = function(n) {
+    return n.toString();
+  };
+
+  // output/Data.Show/index.js
+  var showInt = {
+    show: showIntImpl
+  };
+  var show = function(dict) {
+    return dict.show;
+  };
 
   // output/Data.Maybe/index.js
   var identity4 = /* @__PURE__ */ identity(categoryFn);
@@ -602,10 +615,10 @@
     };
   };
   var functorWriterT = function(dictFunctor) {
-    var map8 = map(dictFunctor);
+    var map9 = map(dictFunctor);
     return {
       map: function(f) {
-        return mapWriterT(map8(function(v) {
+        return mapWriterT(map9(function(v) {
           return new Tuple(f(v.value0), v.value1);
         }));
       }
@@ -616,7 +629,7 @@
     return function(dictApply) {
       var apply3 = apply(dictApply);
       var Functor0 = dictApply.Functor0();
-      var map8 = map(Functor0);
+      var map9 = map(Functor0);
       var functorWriterT1 = functorWriterT(Functor0);
       return {
         apply: function(v) {
@@ -626,7 +639,7 @@
                 return new Tuple(v3.value0(v4.value0), append2(v3.value1)(v4.value1));
               };
             };
-            return apply3(map8(k)(v))(v1);
+            return apply3(map9(k)(v))(v1);
           };
         },
         Functor0: function() {
@@ -641,14 +654,14 @@
     return function(dictBind) {
       var bind4 = bind(dictBind);
       var Apply0 = dictBind.Apply0();
-      var map8 = map(Apply0.Functor0());
+      var map9 = map(Apply0.Functor0());
       var applyWriterT2 = applyWriterT1(Apply0);
       return {
         bind: function(v) {
           return function(k) {
             return bind4(v)(function(v1) {
               var v2 = k(v1.value0);
-              return map8(function(v3) {
+              return map9(function(v3) {
                 return new Tuple(v3.value0, append2(v1.value1)(v3.value1));
               })(v2);
             });
@@ -1771,7 +1784,7 @@
       };
     }
     return function(apply3) {
-      return function(map8) {
+      return function(map9) {
         return function(pure7) {
           return function(f) {
             return function(array) {
@@ -1780,14 +1793,14 @@
                   case 0:
                     return pure7([]);
                   case 1:
-                    return map8(array1)(f(array[bot]));
+                    return map9(array1)(f(array[bot]));
                   case 2:
-                    return apply3(map8(array2)(f(array[bot])))(f(array[bot + 1]));
+                    return apply3(map9(array2)(f(array[bot])))(f(array[bot + 1]));
                   case 3:
-                    return apply3(apply3(map8(array3)(f(array[bot])))(f(array[bot + 1])))(f(array[bot + 2]));
+                    return apply3(apply3(map9(array3)(f(array[bot])))(f(array[bot + 1])))(f(array[bot + 2]));
                   default:
                     var pivot = bot + Math.floor((top2 - bot) / 4) * 2;
-                    return apply3(map8(concat2)(go2(bot, pivot)))(go2(pivot, top2));
+                    return apply3(map9(concat2)(go2(bot, pivot)))(go2(pivot, top2));
                 }
               }
               return go2(0, array.length);
@@ -2637,15 +2650,8 @@
   };
 
   // output/Jelly.Component/index.js
-  var pure4 = /* @__PURE__ */ pure(applicativeSignal);
   var textSig = function(dict) {
     return dict.textSig;
-  };
-  var text = function(dictComponent) {
-    var $40 = textSig(dictComponent);
-    return function($41) {
-      return $40(pure4($41));
-    };
   };
   var el = function(dict) {
     return dict.el;
@@ -2670,31 +2676,46 @@
 
   // output/Square/index.js
   var attr2 = /* @__PURE__ */ attr(attrValueString);
+  var map4 = /* @__PURE__ */ map(functorSignal);
+  var show2 = /* @__PURE__ */ show(showInt);
   var squareComponent = function(dictComponent) {
-    return button(dictComponent)([attr2("class")("square")])(text(dictComponent)("a"));
+    var button2 = button(dictComponent);
+    var textSig2 = textSig(dictComponent);
+    return function(v) {
+      return button2([attr2("class")("square")])(textSig2(map4(show2)(v.value)));
+    };
   };
 
   // output/Board/index.js
+  var pure4 = /* @__PURE__ */ pure(applicativeSignal);
   var discard3 = /* @__PURE__ */ discard(discardUnit);
   var attr3 = /* @__PURE__ */ attr(attrValueString);
+  var renderSquareComponent = function(dictComponent) {
+    var squareComponent2 = squareComponent(dictComponent);
+    return function(valueInt) {
+      return squareComponent2({
+        value: pure4(valueInt)
+      });
+    };
+  };
   var boardComponent = function(dictComponent) {
     var discard1 = discard3(dictComponent.MonadHooks0().MonadEffect0().Monad0().Bind1());
     var div$prime2 = div$prime(dictComponent);
     var div3 = div2(dictComponent);
-    var squareComponent2 = squareComponent(dictComponent);
-    return discard1(div$prime2(div3([attr3("class")("board-row")])(discard1(squareComponent2)(function() {
-      return discard1(squareComponent2)(function() {
-        return squareComponent2;
+    var renderSquareComponent1 = renderSquareComponent(dictComponent);
+    return discard1(div$prime2(div3([attr3("class")("board-row")])(discard1(renderSquareComponent1(0))(function() {
+      return discard1(renderSquareComponent1(1))(function() {
+        return renderSquareComponent1(2);
       });
     }))))(function() {
-      return discard1(div$prime2(div3([attr3("class")("board-row")])(discard1(squareComponent2)(function() {
-        return discard1(squareComponent2)(function() {
-          return squareComponent2;
+      return discard1(div$prime2(div3([attr3("class")("board-row")])(discard1(renderSquareComponent1(3))(function() {
+        return discard1(renderSquareComponent1(4))(function() {
+          return renderSquareComponent1(5);
         });
       }))))(function() {
-        return div$prime2(div3([attr3("class")("board-row")])(discard1(squareComponent2)(function() {
-          return discard1(squareComponent2)(function() {
-            return squareComponent2;
+        return div$prime2(div3([attr3("class")("board-row")])(discard1(renderSquareComponent1(6))(function() {
+          return discard1(renderSquareComponent1(7))(function() {
+            return renderSquareComponent1(8);
           });
         })));
       });
@@ -2842,10 +2863,10 @@
   };
 
   // output/Web.HTML.HTMLDocument/index.js
-  var map4 = /* @__PURE__ */ map(functorEffect);
+  var map5 = /* @__PURE__ */ map(functorEffect);
   var toDocument = unsafeCoerce2;
   var readyState = function(doc) {
-    return map4(function() {
+    return map5(function() {
       var $4 = fromMaybe(Loading.value);
       return function($5) {
         return $4(parse($5));
@@ -2855,7 +2876,7 @@
     });
   };
   var body = function(doc) {
-    return map4(toMaybe)(function() {
+    return map5(toMaybe)(function() {
       return _body(doc);
     });
   };
@@ -2885,7 +2906,7 @@
   var bind1 = /* @__PURE__ */ bind(bindAff);
   var liftEffect4 = /* @__PURE__ */ liftEffect(monadEffectAff);
   var pure22 = /* @__PURE__ */ pure(applicativeAff);
-  var map5 = /* @__PURE__ */ map(functorMaybe);
+  var map6 = /* @__PURE__ */ map(functorMaybe);
   var awaitDomContentLoaded = /* @__PURE__ */ makeAff(function(callback) {
     return function __do() {
       var w = windowImpl();
@@ -2903,7 +2924,7 @@
   });
   var awaitBody = /* @__PURE__ */ discard23(awaitDomContentLoaded)(function() {
     return bind1(liftEffect4(bindFlipped2(body)(bindFlipped2(document2)(windowImpl))))(function(htmlEl) {
-      return pure22(map5(toNode2)(htmlEl));
+      return pure22(map6(toNode2)(htmlEl));
     });
   });
 
@@ -3019,15 +3040,15 @@
   }
 
   // output/Web.DOM.Node/index.js
-  var map6 = /* @__PURE__ */ map(functorEffect);
+  var map7 = /* @__PURE__ */ map(functorEffect);
   var nextSibling = /* @__PURE__ */ function() {
-    var $15 = map6(toMaybe);
+    var $15 = map7(toMaybe);
     return function($16) {
       return $15(_nextSibling($16));
     };
   }();
   var firstChild = /* @__PURE__ */ function() {
-    var $25 = map6(toMaybe);
+    var $25 = map7(toMaybe);
     return function($26) {
       return $25(_firstChild($26));
     };
@@ -3049,7 +3070,7 @@
   var liftEffect5 = /* @__PURE__ */ liftEffect(monadEffectHooks);
   var bindFlipped3 = /* @__PURE__ */ bindFlipped(bindEffect);
   var discard24 = /* @__PURE__ */ discard5(bindHooks);
-  var map7 = /* @__PURE__ */ map(functorEffect);
+  var map8 = /* @__PURE__ */ map(functorEffect);
   var map1 = /* @__PURE__ */ map(functorSignal);
   var for_2 = /* @__PURE__ */ for_(applicativeEffect)(foldableArray);
   var monadTellSignalArrayNodeH = /* @__PURE__ */ monadTellReaderT(/* @__PURE__ */ monadTellWriterT(monoidSignal2)(monadHooks));
@@ -3231,7 +3252,7 @@
       return function(props) {
         return function(children2) {
           return bind22(liftEffect1(windowImpl))(function(w) {
-            return bind22(liftEffect1(map7(toDocument)(document2(w))))(function(d) {
+            return bind22(liftEffect1(map8(toDocument)(document2(w))))(function(d) {
               return bind22(hydrateNode(fromNode)(toNode)(createElement(tag)(d)))(function(v) {
                 return discard32(liftHooks2(hydrate(children2)(toNode(v.value0))))(function() {
                   return useRegisterProps1(!v.value1)(v.value0)(props);
@@ -3247,7 +3268,7 @@
         return function(props) {
           return function(children2) {
             return bind22(liftEffect1(windowImpl))(function(w) {
-              return bind22(liftEffect1(map7(toDocument)(document2(w))))(function(d) {
+              return bind22(liftEffect1(map8(toDocument)(document2(w))))(function(d) {
                 return bind22(hydrateNode(fromNode)(toNode)(createElementNS(new Just(namespace))(tag)(d)))(function(v) {
                   return discard32(liftHooks2(hydrate(children2)(toNode(v.value0))))(function() {
                     return useRegisterProps1(!v.value1)(v.value0)(props);
@@ -3262,7 +3283,7 @@
     elVoid: function(tag) {
       return function(props) {
         return bind22(liftEffect1(windowImpl))(function(w) {
-          return bind22(liftEffect1(map7(toDocument)(document2(w))))(function(d) {
+          return bind22(liftEffect1(map8(toDocument)(document2(w))))(function(d) {
             return bind22(hydrateNode(fromNode)(toNode)(createElement(tag)(d)))(function(v) {
               return useRegisterProps1(!v.value1)(v.value0)(props);
             });
@@ -3272,7 +3293,7 @@
     },
     textSig: function(ts) {
       return bind22(liftEffect1(windowImpl))(function(w) {
-        return bind22(liftEffect1(map7(toDocument)(document2(w))))(function(d) {
+        return bind22(liftEffect1(map8(toDocument)(document2(w))))(function(d) {
           return bind22(hydrateNode(fromNode3)(toNode5)(createTextNode("")(d)))(function(v) {
             return useRegisterText1(!v.value1)(v.value0)(ts);
           });
@@ -3311,7 +3332,7 @@
       return function(publicId2) {
         return function(systemId2) {
           return bind22(liftEffect1(windowImpl))(function(w) {
-            return bind22(liftEffect1(map7(toDocument)(document2(w))))(function(d) {
+            return bind22(liftEffect1(map8(toDocument)(document2(w))))(function(d) {
               return bind22(hydrateNode(fromNode2)(toNode4)(createDocumentType(name16)(publicId2)(systemId2)(d)))(function() {
                 return pure14(unit);
               });
