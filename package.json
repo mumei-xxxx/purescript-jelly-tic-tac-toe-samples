@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "install": "npx spago install",
     "bundle:script": "npx spago bundle-app -t ./public/index.js -y",
     "bundle:scss": "sass --error-css --style=compressed ./src/index.scss ./public/index.css",
     "bundle": "run-s bundle:*",

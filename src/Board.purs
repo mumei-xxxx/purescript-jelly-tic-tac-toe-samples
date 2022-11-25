@@ -5,10 +5,15 @@ module Board
 
 import Prelude
 
-import Jelly.Component (class Component, textSig)
+import Data.Maybe (Maybe(..))
+-- import Data.Array
+import Data.Tuple.Nested ((/\))
+import Jelly.Component (class Component, text, textSig)
 import Jelly.Element as JE
 import Jelly.Prop ((:=))
+import Jelly.Signal (modifyChannel, newState)
 import Square (squareComponent)
+
 
 renderSquareComponent :: forall m. Component m => Int -> m Unit
 renderSquareComponent valueInt = do
@@ -16,6 +21,8 @@ renderSquareComponent valueInt = do
 
 boardComponent :: forall m. Component m => m Unit
 boardComponent = do
+  squareArraySig /\ squareArrayChannel <- newState [Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing]
+  -- squareArraySig /\ squareArrayChannel <- newState [Nothing, Nothing, Nothing]
   JE.div' do
     JE.div [ "class" := "board-row" ] do
       renderSquareComponent 0

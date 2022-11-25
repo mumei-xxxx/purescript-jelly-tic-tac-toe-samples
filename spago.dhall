@@ -19,7 +19,9 @@ to generate this file without the comments in this block.
   , "jelly"
   , "jelly-hooks"
   , "jelly-signal"
+  , "maybe"
   , "prelude"
+  , "tuples"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]
