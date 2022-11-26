@@ -5,23 +5,28 @@ module Board
 
 import Prelude
 
+import Data.Array (replicate)
 import Data.Maybe (Maybe(..))
+-- import Data.Number (log)
 import Data.Tuple.Nested ((/\))
 import Jelly.Component (class Component, text, textSig)
 import Jelly.Element as JE
 import Jelly.Prop ((:=))
 import Jelly.Signal (modifyChannel, newState)
-import Prim.Boolean (True)
 import Square (squareComponent)
-
 
 renderSquareComponent :: forall m. Component m => Int -> m Unit
 renderSquareComponent valueInt = do
   squareComponent { value: pure valueInt }
 
+-- init ∷ ∀ (a8 ∷ String). Array (Maybe String)
+-- initx ∷ Array (Maybe Int)
+-- squareArraySig = (replicate 9 (Nothing :: Maybe Int))
+
 boardComponent :: forall m. Component m => m Unit
 boardComponent = do
-  squareArraySig /\ squareArrayChannel <- newState [Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing]
+
+  squareArraySig /\ squareArrayChannel <- newState (replicate 9  (Nothing :: Maybe Int))
 
   xIsNextSig /\ xIsNextChannel <- newState true
   -- squareArraySig /\ squareArrayChannel <- newState [Nothing, Nothing, Nothing]
