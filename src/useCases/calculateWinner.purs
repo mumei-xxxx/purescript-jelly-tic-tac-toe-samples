@@ -1,7 +1,9 @@
 module Usecases.Calculatewinner where
 
-import Data.Show
+import Prelude
 
+import Data.Show
+import Data.Array
 import Data.Maybe (Maybe(..))
 import Data.Traversable (for)
 
@@ -24,6 +26,8 @@ instance showSquareValue :: Show SquareValue where
   show O = "O"
 
 type BoardArrType = Array(Maybe SquareValue)
+
+
 
 calculateWinner :: BoardArrType -> Maybe SquareValue
 calculateWinner boardArr =
