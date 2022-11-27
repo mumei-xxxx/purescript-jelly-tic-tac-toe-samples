@@ -1,5 +1,9 @@
 module Usecases.Calculatewinner where
 
+import Data.Show
+
+import Data.Maybe (Maybe(..))
+
 -- import Prelude
 
 lines :: Array(Array Int)
@@ -14,4 +18,11 @@ lines = [
   [2, 4, 6]
 ]
 
+data SquareValue = X | O
+
+instance showSquareValue :: Show SquareValue where
+  show X = "X"
+  show O = "O"
+
+type BoardArrType = Array(Maybe SquareValue)
 
