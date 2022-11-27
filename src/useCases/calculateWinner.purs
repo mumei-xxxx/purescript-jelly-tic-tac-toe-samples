@@ -4,6 +4,7 @@ import Data.Show
 
 import Data.Maybe (Maybe(..))
 
+import Data.Traversable (for)
 -- import Prelude
 
 lines :: Array(Array Int)
@@ -26,3 +27,5 @@ instance showSquareValue :: Show SquareValue where
 
 type BoardArrType = Array(Maybe SquareValue)
 
+calculateWinner :: BoardArrType -> Maybe SquareValue
+calculateWinner =
