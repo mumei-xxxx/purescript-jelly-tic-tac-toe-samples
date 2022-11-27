@@ -3,9 +3,7 @@ module Usecases.Calculatewinner where
 import Data.Show
 
 import Data.Maybe (Maybe(..))
-
 import Data.Traversable (for)
--- import Prelude
 
 lines :: Array(Array Int)
 lines = [
@@ -28,4 +26,14 @@ instance showSquareValue :: Show SquareValue where
 type BoardArrType = Array(Maybe SquareValue)
 
 calculateWinner :: BoardArrType -> Maybe SquareValue
-calculateWinner =
+calculateWinner boardArr =
+  for lines \line -> do
+    let a = line !! 0
+    let b = line !! 1
+    let c = line !! 2
+    if  boardArr !! a &&
+        boardArr !! a == boardArr !! b &&
+        boardArr !! b == boardArr !! c
+    then boardArr !! a
+    else Nothing
+
