@@ -1,10 +1,15 @@
-module Usecases.Calculatewinner where
+module Usecases.Calculatewinner
+  ( SquareValue(..)
+  , calculateWinner
+  , lines
+  )
+  where
 
+import Data.Array
+import Data.Show
 import Prelude
 
-import Data.Show
-import Data.Array
-import Data.Maybe (Maybe(..))
+import Data.Maybe (Maybe(..),isJust)
 import Data.Traversable (for)
 
 lines :: Array(Array Int)
@@ -21,23 +26,40 @@ lines = [
 
 data SquareValue = X | O
 
-instance showSquareValue :: Show SquareValue where
+derive instance Eq SquareValue
+
+instance Show SquareValue where
   show X = "X"
   show O = "O"
 
-type BoardArrType = Array(Maybe SquareValue)
+type Board = Array (Maybe SquareValue)
 
-
-
-calculateWinner :: BoardArrType -> Maybe SquareValue
+calculateWinner :: Board -> Maybe SquareValue
 calculateWinner boardArr =
-  for lines \line -> do
-    let a = line !! 0
-    let b = line !! 1
-    let c = line !! 2
-    if  boardArr !! a &&
-        boardArr !! a == boardArr !! b &&
-        boardArr !! b == boardArr !! c
-    then boardArr !! a
-    else Nothing
+  let
+    -- | ある Line が同じ SquareValue で埋まっているかどうか判定する
+    {-
+      https://pursuit.purescript.org/packages/purescript-arrays/7.1.0/docs/Data.Array#v:all
+    -}
+    pred :: Array Int -> SquareValue -> Boolean
+    pred line sv = all (\i -> boardArr !! i == Just (Just sv)) line
 
+    -- | すべての Line, SquareValue の組み合わせについて pred を評価する
+    checked :: Array (Maybe SquareValue)
+    checked = do
+      line <- lines
+      sv <- [ X, O ]
+      pure
+        if pred line sv then
+          Just sv
+        else
+          Nothing
+  in
+    join $ find isJust checked
+    -- | checked の中で一番最初に Just が出てきたものを返す
+    -- | find で帰ってくるのは Maybe (Maybe SquareValue) なので、join で一つ unwrap する
+    {-
+      find https://pursuit.purescript.org/packages/purescript-arrays/7.1.0/docs/Data.Array#v:find
+      isJust
+      https://pursuit.purescript.org/packages/purescript-maybe/6.0.0/docs/Data.Maybe#v:isJust
+    -}
