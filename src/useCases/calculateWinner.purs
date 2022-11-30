@@ -64,6 +64,10 @@ type Board = Array (Maybe SquareValue)
       https://pursuit.purescript.org/packages/purescript-maybe/6.0.0/docs/Data.Maybe#v:isJust
     -}
 
+{-
+  [X, O, Nothing, X, O, O, X, O, O]
+  [Just X, Just O, Nothing, Just X, Just O, Just O, Just X, Just O, Just O]
+-}
 calculateWinner :: Board -> Maybe SquareValue
 calculateWinner boardArr = head do
   line <- lines
