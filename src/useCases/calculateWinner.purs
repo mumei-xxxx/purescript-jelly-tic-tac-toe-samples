@@ -9,8 +9,8 @@ import Data.Array
 import Data.Show
 import Prelude
 
-import Data.Maybe (Maybe(..),isJust)
-import Data.Traversable (for)
+import Control.Alternative (guard)
+import Data.Maybe (Maybe(..))
 
 lines :: Array(Array Int)
 lines = [
@@ -34,28 +34,28 @@ instance Show SquareValue where
 
 type Board = Array (Maybe SquareValue)
 
-calculateWinner :: Board -> Maybe SquareValue
-calculateWinner boardArr =
-  let
+-- calculateWinner :: Board -> Maybe SquareValue
+-- calculateWinner boardArr =
+--   let
     -- | ある Line が同じ SquareValue で埋まっているかどうか判定する
     {-
       https://pursuit.purescript.org/packages/purescript-arrays/7.1.0/docs/Data.Array#v:all
     -}
-    pred :: Array Int -> SquareValue -> Boolean
-    pred line sv = all (\i -> boardArr !! i == Just (Just sv)) line
+    -- pred :: Array Int -> SquareValue -> Boolean
+    -- pred line sv = all (\i -> boardArr !! i == Just (Just sv)) line
 
     -- | すべての Line, SquareValue の組み合わせについて pred を評価する
-    checked :: Array (Maybe SquareValue)
-    checked = do
-      line <- lines
-      sv <- [ X, O ]
-      pure
-        if pred line sv then
-          Just sv
-        else
-          Nothing
-  in
-    join $ find isJust checked
+    -- checked :: Array (Maybe SquareValue)
+    -- checked = do
+    --   line <- lines
+    --   sv <- [ X, O ]
+    --   pure
+    --     if pred line sv then
+    --       Just sv
+    --     else
+    --       Nothing
+  -- in
+  --   join $ find isJust checked
     -- | checked の中で一番最初に Just が出てきたものを返す
     -- | find で帰ってくるのは Maybe (Maybe SquareValue) なので、join で一つ unwrap する
     {-
@@ -63,3 +63,10 @@ calculateWinner boardArr =
       isJust
       https://pursuit.purescript.org/packages/purescript-maybe/6.0.0/docs/Data.Maybe#v:isJust
     -}
+
+calculateWinner :: Board -> Maybe SquareValue
+calculateWinner boardArr = head do
+  line <- lines
+  sv <- [ X, O ]
+  guard $ all (\i -> boardArr !! i == Just (Just sv)) line
+  pure sv
