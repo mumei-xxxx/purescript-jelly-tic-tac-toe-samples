@@ -1,13 +1,15 @@
-module Usecases.Calculatewinner
+module UseCases.Calculatewinner
   ( SquareValue(..)
+  , Board
   , calculateWinner
   , lines
   )
   where
 
-import Data.Array
-import Data.Show
 import Prelude
+
+import Data.Array (all, head, (!!))
+import Data.Show
 
 import Control.Alternative (guard)
 import Data.Maybe (Maybe(..))
@@ -27,6 +29,7 @@ lines = [
 data SquareValue = X | O
 
 derive instance Eq SquareValue
+-- derive instance Show SquareValue
 
 instance Show SquareValue where
   show X = "X"
@@ -67,6 +70,9 @@ type Board = Array (Maybe SquareValue)
 {-
   [X, O, Nothing, X, O, O, X, O, O]
   [Just X, Just O, Nothing, Just X, Just O, Just O, Just X, Just O, Just O]
+  
+  calculateWinner $ map Just [X, O, X, X, O, O, X, O, O]
+(Just X)
 -}
 calculateWinner :: Board -> Maybe SquareValue
 calculateWinner boardArr = head do
