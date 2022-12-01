@@ -5,6 +5,7 @@ module Board
 
 import Prelude
 
+import Effect (Effect)
 import Data.Array (replicate)
 import Data.Maybe (Maybe(..))
 -- import Data.Number (log)
@@ -14,6 +15,13 @@ import Jelly.Element as JE
 import Jelly.Prop ((:=))
 import Jelly.Signal (modifyChannel, newState)
 import Square (squareComponent)
+
+
+handleClick :: Effect Unit
+handleClick = do
+  squareArraySig /\ squareArrayChannel <- newState (replicate 9  (Nothing :: Maybe Int))
+
+  xIsNextSig /\ xIsNextChannel <- newState true
 
 renderSquareComponent :: forall m. Component m => Int -> m Unit
 renderSquareComponent valueInt = do
@@ -25,11 +33,10 @@ renderSquareComponent valueInt = do
 
 boardComponent :: forall m. Component m => m Unit
 boardComponent = do
+  -- squareArraySig /\ squareArrayChannel <- newState (replicate 9  (Nothing :: Maybe Int))
 
-  squareArraySig /\ squareArrayChannel <- newState (replicate 9  (Nothing :: Maybe Int))
+  -- xIsNextSig /\ xIsNextChannel <- newState true
 
-  xIsNextSig /\ xIsNextChannel <- newState true
-  -- squareArraySig /\ squareArrayChannel <- newState [Nothing, Nothing, Nothing]
   JE.div' do
     JE.div [ "class" := "board-row" ] do
       renderSquareComponent 0
