@@ -6,11 +6,9 @@ module UseCases.Calculatewinner
   )
   where
 
-import Prelude
+import Prelude (class Eq, class Show, bind, discard, pure, ($), (==))
 
 import Data.Array (all, head, (!!))
-import Data.Show
-
 import Control.Alternative (guard)
 import Data.Maybe (Maybe(..))
 
@@ -70,7 +68,7 @@ type Board = Array (Maybe SquareValue)
 {-
   [X, O, Nothing, X, O, O, X, O, O]
   [Just X, Just O, Nothing, Just X, Just O, Just O, Just X, Just O, Just O]
-  
+
   calculateWinner $ map Just [X, O, X, X, O, O, X, O, O]
 (Just X)
 -}
