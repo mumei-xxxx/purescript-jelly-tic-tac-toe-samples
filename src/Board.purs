@@ -17,7 +17,7 @@ import Jelly.Signal (modifyChannel_, newState, readSignal, writeChannel)
 import Data.HeytingAlgebra (not)
 
 import Square (squareComponent)
-import UseCases.Calculatewinner (SquareValue, calculateWinner)
+import UseCases.Calculatewinner (SquareValue(..), calculateWinner)
 
 -- handleClick :: Effect Unit
 -- handleClick = do
