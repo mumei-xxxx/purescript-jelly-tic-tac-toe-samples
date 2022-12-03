@@ -5,9 +5,9 @@ module Board
 
 import Prelude
 
--- import Effect (Effect)
-import Data.Array (replicate)
-import Data.Maybe (Maybe(..))
+import Effect.Class (class MonadEffect)
+import Data.Array (replicate, (!!))
+import Data.Maybe (Maybe(..),isJust)
 -- import Data.Number (log)
 import Data.Tuple.Nested ((/\))
 import Jelly.Component (class Component, text, textSig)
@@ -17,7 +17,7 @@ import Jelly.Signal (modifyChannel, newState)
 import Data.HeytingAlgebra (not)
 
 import Square (squareComponent)
-import UseCases.Calculatewinner (SquareValue)
+import UseCases.Calculatewinner (SquareValue, calculateWinner)
 
 -- handleClick :: Effect Unit
 -- handleClick = do
