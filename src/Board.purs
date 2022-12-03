@@ -7,13 +7,13 @@ import Prelude
 
 import Effect.Class (class MonadEffect)
 import Data.Array (replicate, (!!))
-import Data.Maybe (Maybe(..),isJust)
+import Data.Maybe (Maybe(..), isNothing)
 -- import Data.Number (log)
 import Data.Tuple.Nested ((/\))
 import Jelly.Component (class Component, text, textSig)
 import Jelly.Element as JE
 import Jelly.Prop ((:=))
-import Jelly.Signal (modifyChannel, newState)
+import Jelly.Signal (modifyChannel_, newState, readSignal, writeChannel)
 import Data.HeytingAlgebra (not)
 
 import Square (squareComponent)
@@ -36,7 +36,7 @@ renderSquareComponent valueInt = do
 
 boardComponent :: forall m. Component m => m Unit
 boardComponent = do
-  squareArraySig /\ squareArrayChannel <- newState (replicate 9  (Nothing :: Maybe Int))
+  squareArraySig /\ squareArrayChannel <- newState (replicate 9  (Nothing :: Maybe SquareValue))
 
   xIsNextSig /\ xIsNextChannel <- newState true
 
