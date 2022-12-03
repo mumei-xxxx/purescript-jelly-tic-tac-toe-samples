@@ -6,7 +6,7 @@ module Board
 import Prelude
 
 import Effect.Class (class MonadEffect)
-import Data.Array (replicate, (!!))
+import Data.Array (replicate, (!!), modifyAt)
 import Data.Maybe (Maybe(..), isNothing)
 -- import Data.Number (log)
 import Data.Tuple.Nested ((/\))
@@ -44,10 +44,16 @@ boardComponent = do
       renderSquareComponent valueInt = do
         squareComponent { value: pure valueInt }
 
-  -- let handleClick :: Effect Unit
-  --     handleClick =
-  --       -- modifyChannel squareArrayChannel
-  --       modifyChannel xIsNextChannel (not _)
+  let handleClick :: forall m. MonadEffect m => Int -> m Unit
+      handleClick i = do
+        squares <- readSignal squareArraySig
+        let winner = calculateWinner squares
+        when (isNothing winner && isNothing (squares !! i)) do
+          xIsNext <- readSignal xIsNextSig
+          let squareVal = Just $ if xIsNext then X else O
+              newSquares = fromMaybe squares $ modifyAt i squareVal squares
+          writeChannel squareArrayChannel newSquares
+          modifyChannel_ xIsNextChannel not
 
   JE.div' do
     JE.div [ "class" := "board-row" ] do
