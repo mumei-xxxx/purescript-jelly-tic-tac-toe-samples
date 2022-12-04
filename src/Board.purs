@@ -29,7 +29,9 @@ import UseCases.Calculatewinner (Board(..), SquareValue(..), Board, calculateWin
 
 boardComponent :: forall m. Component m => m Unit
 boardComponent = do
-  squareArraySig /\ squareArrayChannel <- newState (replicate 9  (Nothing :: Maybe SquareValue))
+  let initialArr :: Board
+      initialArr = replicate 9 Nothing
+  squareArraySig /\ squareArrayChannel <- newState initialArr
 
   xIsNextSig /\ xIsNextChannel <- newState true
 
