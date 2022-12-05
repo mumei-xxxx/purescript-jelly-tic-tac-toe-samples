@@ -14,7 +14,7 @@ import Effect.Class (class MonadEffect)
 import Jelly.Component (class Component, text, textSig)
 import Jelly.Element as JE
 import Jelly.Prop ((:=))
-import Jelly.Signal (modifyChannel_, newState, readSignal, writeChannel)
+import Jelly.Signal (Signal, modifyChannel_, newState, readSignal, writeChannel)
 import Square (squareComponent)
 import UseCases.Calculatewinner (Board(..), SquareValue(..), Board, calculateWinner)
 
@@ -50,17 +50,16 @@ boardComponent = do
           writeChannel squareArrayChannel newSquares
           modifyChannel_ xIsNextChannel not
 
-  let getPlayStatus :: Board -> String
-      getPlayStatus boardArr = do
-        squares <- readSignal squareArraySig
-        xIsNext <- readSignal xIsNextSig
-        let winner = calculateWinner squares
-        let nextPlayer = Just $ if xIsNext then X else O
-        if isNothing winner
-        then
-          pure "Next player: " <> show <$> nextPlayer
-        else
-          pure "Winner: " <> show <$> winner
+  let getPlayStatus :: Signal String
+      getPlayStatus = do
+        squares <- squareArraySig
+        xIsNext <- xIsNextSig
+        let
+          winner = calculateWinner squares
+          nextPlayer = if xIsNext then X else O
+        case winner of
+          Nothing -> pure $ "Next player: " <> show nextPlayer
+          Just w -> pure $ "Winner: " <> show w
 
 
   JE.div' do
