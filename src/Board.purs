@@ -50,8 +50,8 @@ boardComponent = do
           writeChannel squareArrayChannel newSquares
           modifyChannel_ xIsNextChannel not
 
-  let getPlayStatus :: Signal String
-      getPlayStatus = do
+  let playStatus :: Signal String
+      playStatus = do
         squares <- squareArraySig
         xIsNext <- xIsNextSig
         let
@@ -63,7 +63,7 @@ boardComponent = do
 
   JE.div' do
     JE.div' do
-      textSig $ getPlayStatus
+      textSig $ playStatus
     JE.div' do
       JE.div [ "class" := "board-row" ] do
         renderSquareComponent 0

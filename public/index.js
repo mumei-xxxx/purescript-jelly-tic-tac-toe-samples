@@ -3030,7 +3030,7 @@
             });
           };
         };
-        var getPlayStatus = bind4(v.value0)(function(squares) {
+        var playStatus = bind4(v.value0)(function(squares) {
           return bind4(v1.value0)(function(xIsNext) {
             var winner = calculateWinner(squares);
             var nextPlayer = function() {
@@ -3053,7 +3053,7 @@
             }());
           });
         });
-        return div$prime2(discard1(div$prime2(textSig2(getPlayStatus)))(function() {
+        return div$prime2(discard1(div$prime2(textSig2(playStatus)))(function() {
           return discard1(div$prime2(div3([attr3("class")("board-row")])(discard1(renderSquareComponent1(0))(function() {
             return discard1(renderSquareComponent1(1))(function() {
               return renderSquareComponent1(2);
