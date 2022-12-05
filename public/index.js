@@ -394,12 +394,12 @@
 
   // output/Control.Monad/index.js
   var ap = function(dictMonad) {
-    var bind5 = bind(dictMonad.Bind1());
+    var bind6 = bind(dictMonad.Bind1());
     var pure8 = pure(dictMonad.Applicative0());
     return function(f) {
       return function(a) {
-        return bind5(f)(function(f$prime) {
-          return bind5(a)(function(a$prime) {
+        return bind6(f)(function(f$prime) {
+          return bind6(a)(function(a$prime) {
             return pure8(f$prime(a$prime));
           });
         });
@@ -1017,13 +1017,13 @@
     };
   };
   var bindReaderT = function(dictBind) {
-    var bind5 = bind(dictBind);
+    var bind6 = bind(dictBind);
     var applyReaderT1 = applyReaderT(dictBind.Apply0());
     return {
       bind: function(v) {
         return function(k) {
           return function(r) {
-            return bind5(v(r))(function(a) {
+            return bind6(v(r))(function(a) {
               var v1 = k(a);
               return v1(r);
             });
@@ -1118,10 +1118,10 @@
     var mempty5 = mempty(dictMonoid);
     return {
       lift: function(dictMonad) {
-        var bind5 = bind(dictMonad.Bind1());
+        var bind6 = bind(dictMonad.Bind1());
         var pure8 = pure(dictMonad.Applicative0());
         return function(m) {
-          return bind5(m)(function(a) {
+          return bind6(m)(function(a) {
             return pure8(new Tuple(a, mempty5));
           });
         };
@@ -1171,14 +1171,14 @@
     var append2 = append(dictSemigroup);
     var applyWriterT1 = applyWriterT(dictSemigroup);
     return function(dictBind) {
-      var bind5 = bind(dictBind);
+      var bind6 = bind(dictBind);
       var Apply0 = dictBind.Apply0();
       var map9 = map(Apply0.Functor0());
       var applyWriterT2 = applyWriterT1(Apply0);
       return {
         bind: function(v) {
           return function(k) {
-            return bind5(v)(function(v1) {
+            return bind6(v)(function(v1) {
               var v2 = k(v1.value0);
               return map9(function(v3) {
                 return new Tuple(v3.value0, append2(v1.value1)(v3.value1));
@@ -2932,6 +2932,19 @@
     O2.value = new O2();
     return O2;
   }();
+  var showSquareValue = {
+    show: function(v) {
+      if (v instanceof X) {
+        return "X";
+      }
+      ;
+      if (v instanceof O) {
+        return "O";
+      }
+      ;
+      throw new Error("Failed pattern match at UseCases.Calculatewinner (line 32, column 1 - line 34, column 15): " + [v.constructor.name]);
+    }
+  };
   var eqSquareValue = {
     eq: function(x) {
       return function(y) {
@@ -2965,18 +2978,22 @@
   var pure5 = /* @__PURE__ */ pure(applicativeSignal);
   var discard4 = /* @__PURE__ */ discard(discardUnit);
   var not2 = /* @__PURE__ */ not(heytingAlgebraBoolean);
+  var bind4 = /* @__PURE__ */ bind(bindSignal);
+  var show3 = /* @__PURE__ */ show(showSquareValue);
   var attr3 = /* @__PURE__ */ attr(attrValueString);
   var boardComponent = function(dictComponent) {
     var MonadEffect0 = dictComponent.MonadHooks0().MonadEffect0();
     var Bind1 = MonadEffect0.Monad0().Bind1();
-    var bind5 = bind(Bind1);
+    var bind12 = bind(Bind1);
     var newState2 = newState(MonadEffect0);
-    var discard1 = discard4(Bind1);
     var div$prime2 = div$prime(dictComponent);
+    var discard1 = discard4(Bind1);
+    var textSig2 = textSig(dictComponent);
     var div3 = div2(dictComponent);
-    return bind5(newState2(replicate(9)(Nothing.value)))(function(v) {
-      return bind5(newState2(true))(function(v1) {
-        var renderSquareComponent1 = function(dictComponent1) {
+    var initialArr = replicate(9)(Nothing.value);
+    return bind12(newState2(initialArr))(function(v) {
+      return bind12(newState2(true))(function(v1) {
+        var renderSquareComponent = function(dictComponent1) {
           var squareComponent2 = squareComponent(dictComponent1);
           return function(valueInt) {
             return squareComponent2({
@@ -2984,20 +3001,20 @@
             });
           };
         };
-        var renderSquareComponent2 = renderSquareComponent1(dictComponent);
+        var renderSquareComponent1 = renderSquareComponent(dictComponent);
         var handleClick = function(dictMonadEffect) {
           var Monad0 = dictMonadEffect.Monad0();
           var Bind11 = Monad0.Bind1();
-          var bind12 = bind(Bind11);
+          var bind23 = bind(Bind11);
           var readSignal3 = readSignal(dictMonadEffect);
           var when2 = when(Monad0.Applicative0());
           var discard25 = discard4(Bind11);
           var writeChannel3 = writeChannel(dictMonadEffect);
           var modifyChannel_2 = modifyChannel_(dictMonadEffect);
           return function(i) {
-            return bind12(readSignal3(v.value0))(function(squares) {
+            return bind23(readSignal3(v.value0))(function(squares) {
               var winner = calculateWinner(squares);
-              return when2(isNothing(winner) && isNothing(index(squares)(i)))(bind12(readSignal3(v1.value0))(function(xIsNext) {
+              return when2(isNothing(winner) && isNothing(index(squares)(i)))(bind23(readSignal3(v1.value0))(function(xIsNext) {
                 var squareVal = new Just(function() {
                   if (xIsNext) {
                     return X.value;
@@ -3013,23 +3030,48 @@
             });
           };
         };
-        return discard1(div$prime2(div3([attr3("class")("board-row")])(discard1(renderSquareComponent2(0))(function() {
-          return discard1(renderSquareComponent2(1))(function() {
-            return renderSquareComponent2(2);
-          });
-        }))))(function() {
-          return discard1(div$prime2(div3([attr3("class")("board-row")])(discard1(renderSquareComponent2(3))(function() {
-            return discard1(renderSquareComponent2(4))(function() {
-              return renderSquareComponent2(5);
-            });
-          }))))(function() {
-            return div$prime2(div3([attr3("class")("board-row")])(discard1(renderSquareComponent2(6))(function() {
-              return discard1(renderSquareComponent2(7))(function() {
-                return renderSquareComponent2(8);
-              });
-            })));
+        var getPlayStatus = bind4(v.value0)(function(squares) {
+          return bind4(v1.value0)(function(xIsNext) {
+            var winner = calculateWinner(squares);
+            var nextPlayer = function() {
+              if (xIsNext) {
+                return X.value;
+              }
+              ;
+              return O.value;
+            }();
+            return pure5(function() {
+              if (winner instanceof Nothing) {
+                return "Next player: " + show3(nextPlayer);
+              }
+              ;
+              if (winner instanceof Just) {
+                return "Winner: " + show3(winner.value0);
+              }
+              ;
+              throw new Error("Failed pattern match at Board (line 60, column 14 - line 62, column 41): " + [winner.constructor.name]);
+            }());
           });
         });
+        return div$prime2(discard1(div$prime2(textSig2(getPlayStatus)))(function() {
+          return discard1(div$prime2(div3([attr3("class")("board-row")])(discard1(renderSquareComponent1(0))(function() {
+            return discard1(renderSquareComponent1(1))(function() {
+              return renderSquareComponent1(2);
+            });
+          }))))(function() {
+            return discard1(div$prime2(div3([attr3("class")("board-row")])(discard1(renderSquareComponent1(3))(function() {
+              return discard1(renderSquareComponent1(4))(function() {
+                return renderSquareComponent1(5);
+              });
+            }))))(function() {
+              return div$prime2(div3([attr3("class")("board-row")])(discard1(renderSquareComponent1(6))(function() {
+                return discard1(renderSquareComponent1(7))(function() {
+                  return renderSquareComponent1(8);
+                });
+              })));
+            });
+          });
+        }));
       });
     });
   };
@@ -3378,7 +3420,7 @@
   var discard6 = /* @__PURE__ */ discard(discardUnit);
   var mempty4 = /* @__PURE__ */ mempty(/* @__PURE__ */ monoidEffect(/* @__PURE__ */ monoidEffect(monoidUnit)));
   var pure7 = /* @__PURE__ */ pure(applicativeSignal);
-  var bind4 = /* @__PURE__ */ bind(bindHooks);
+  var bind5 = /* @__PURE__ */ bind(bindHooks);
   var liftEffect5 = /* @__PURE__ */ liftEffect(monadEffectHooks);
   var bindFlipped3 = /* @__PURE__ */ bindFlipped(bindEffect);
   var discard24 = /* @__PURE__ */ discard6(bindHooks);
@@ -3545,8 +3587,8 @@
   };
   var hydrate = function(v) {
     return function(node) {
-      return bind4(liftEffect5(bindFlipped3($$new)(firstChild(node))))(function(realNodeRef) {
-        return bind4(runWriterT(runReaderT(v)(realNodeRef)))(function(v1) {
+      return bind5(liftEffect5(bindFlipped3($$new)(firstChild(node))))(function(realNodeRef) {
+        return bind5(runWriterT(runReaderT(v)(realNodeRef)))(function(v1) {
           return useRegisterChildren1(true)(node)(v1.value1);
         });
       });

@@ -57,23 +57,25 @@ boardComponent = do
         let
           winner = calculateWinner squares
           nextPlayer = if xIsNext then X else O
-        case winner of
-          Nothing -> pure $ "Next player: " <> show nextPlayer
-          Just w -> pure $ "Winner: " <> show w
+        pure case winner of
+          Nothing -> "Next player: " <> show nextPlayer
+          Just w -> "Winner: " <> show w
 
-
   JE.div' do
-    JE.div [ "class" := "board-row" ] do
-      renderSquareComponent 0
-      renderSquareComponent 1
-      renderSquareComponent 2
-  JE.div' do
-    JE.div [ "class" := "board-row" ] do
-      renderSquareComponent 3
-      renderSquareComponent 4
-      renderSquareComponent 5
-  JE.div' do
-    JE.div [ "class" := "board-row" ] do
-      renderSquareComponent 6
-      renderSquareComponent 7
-      renderSquareComponent 8
+    JE.div' do
+      textSig $ getPlayStatus
+    JE.div' do
+      JE.div [ "class" := "board-row" ] do
+        renderSquareComponent 0
+        renderSquareComponent 1
+        renderSquareComponent 2
+    JE.div' do
+      JE.div [ "class" := "board-row" ] do
+        renderSquareComponent 3
+        renderSquareComponent 4
+        renderSquareComponent 5
+    JE.div' do
+      JE.div [ "class" := "board-row" ] do
+        renderSquareComponent 6
+        renderSquareComponent 7
+        renderSquareComponent 8
