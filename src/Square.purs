@@ -1,22 +1,16 @@
 module Square
-  ( SquarePropsType
+  ( SquarePropsType,
+  squareComponent
   )
   where
 
 import Prelude
 
-import Data.Foldable (traverse_)
-import Effect (Effect)
-import Effect.Aff (launchAff_)
-import Effect.Class (liftEffect)
-import Jelly.Aff (awaitBody)
-import Jelly.Component (class Component, rawSig, text, textSig)
+import Jelly.Component (class Component, textSig)
 import Jelly.Element as JE
-import Jelly.Hooks (runHooks_)
-import Jelly.Hydrate (mount)
 import Jelly.Prop ((:=), on)
 import Jelly.Signal (Signal)
-import UseCases.Calculatewinner (Board(..), SquareValue(..), Board, calculateWinner)
+import UseCases.Calculatewinner (SquareValue)
 -- import Web.HTML.HTMLElement (click)
 import Web.HTML.Event.EventTypes (click)
 
