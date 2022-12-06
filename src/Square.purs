@@ -15,12 +15,11 @@ import UseCases.Calculatewinner (SquareValue)
 import Web.HTML.Event.EventTypes (click)
 
 type SquarePropsType m =
-  { value :: Signal SquareValue
-  , onClick :: m Unit
-  }
+  { onClick :: m Unit
+  , value :: Signal SquareValue }
 
 squareComponent :: forall m. Component m => SquarePropsType m -> m Unit
-squareComponent { value, onClick } = do
+squareComponent { onClick, value } = do
   JE.button [ "class" := "square", on click \_ -> onClick ] do
     textSig $ show <$> value
 
