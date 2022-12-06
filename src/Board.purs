@@ -27,7 +27,7 @@ import UseCases.Calculatewinner (Board(..), SquareValue(..), Board, calculateWin
 -- squareArraySig = (replicate 9 (Nothing :: Maybe Int))
 
 type OnClickFuncType m = {
-    onClickFunc :: m Unit
+    onClickFunc :: forall m. MonadEffect m => Int -> m Unit
   }
 
 boardComponent :: forall m. Component m => m Unit
@@ -37,10 +37,6 @@ boardComponent = do
   squareArraySig /\ squareArrayChannel <- newState initialArr
 
   xIsNextSig /\ xIsNextChannel <- newState true
-
-  let renderSquareComponent :: forall m. Component m => Int -> m Unit
-      renderSquareComponent valueInt = do
-        squareComponent { value: pure valueInt }
 
   let handleClick :: forall m. MonadEffect m => Int -> m Unit
       handleClick i = do
@@ -52,6 +48,13 @@ boardComponent = do
               newSquares = fromMaybe squares $ updateAt i squareVal squares
           writeChannel squareArrayChannel newSquares
           modifyChannel_ xIsNextChannel not
+
+  let renderSquareComponent :: forall m. Component m => OnClickFuncType m -> Int -> m Unit
+      renderSquareComponent { onClickFunc } valueInt = do
+        squares <- readSignal squareArraySig
+        let val = squares !! valueInt
+            func = onClickFunc valueInt
+        squareComponent { onClick: func, value: val }
 
   let playStatus :: Signal String
       playStatus = do
@@ -69,16 +72,16 @@ boardComponent = do
       textSig $ playStatus
     JE.div' do
       JE.div [ "class" := "board-row" ] do
-        renderSquareComponent 0
-        renderSquareComponent 1
-        renderSquareComponent 2
+        renderSquareComponent handleClick 0
+        renderSquareComponent handleClick 1
+        renderSquareComponent handleClick 2
     JE.div' do
       JE.div [ "class" := "board-row" ] do
-        renderSquareComponent 3
-        renderSquareComponent 4
-        renderSquareComponent 5
+        renderSquareComponent handleClick 3
+        renderSquareComponent handleClick 4
+        renderSquareComponent handleClick 5
     JE.div' do
       JE.div [ "class" := "board-row" ] do
-        renderSquareComponent 6
-        renderSquareComponent 7
-        renderSquareComponent 8
+        renderSquareComponent handleClick 6
+        renderSquareComponent handleClick 7
+        renderSquareComponent handleClick 8
