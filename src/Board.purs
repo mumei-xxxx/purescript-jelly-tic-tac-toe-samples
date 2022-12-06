@@ -72,16 +72,16 @@ boardComponent = do
       textSig $ playStatus
     JE.div' do
       JE.div [ "class" := "board-row" ] do
-        renderSquareComponent handleClick 0
-        renderSquareComponent handleClick 1
-        renderSquareComponent handleClick 2
+        renderSquareComponent { handleClick } 0
+        renderSquareComponent { handleClick } 1
+        renderSquareComponent { handleClick } 2
     JE.div' do
       JE.div [ "class" := "board-row" ] do
-        renderSquareComponent handleClick 3
-        renderSquareComponent handleClick 4
-        renderSquareComponent handleClick 5
+        renderSquareComponent { handleClick } 3
+        renderSquareComponent { handleClick } 4
+        renderSquareComponent { handleClick } 5
     JE.div' do
       JE.div [ "class" := "board-row" ] do
-        renderSquareComponent handleClick 6
-        renderSquareComponent handleClick 7
-        renderSquareComponent handleClick 8
+        renderSquareComponent { handleClick } 6
+        renderSquareComponent { handleClick } 7
+        renderSquareComponent { handleClick } 8
