@@ -1,4 +1,7 @@
-module Square where
+module Square
+  ( SquarePropsType
+  )
+  where
 
 import Prelude
 
@@ -11,23 +14,26 @@ import Jelly.Component (class Component, rawSig, text, textSig)
 import Jelly.Element as JE
 import Jelly.Hooks (runHooks_)
 import Jelly.Hydrate (mount)
-import Jelly.Prop ((:=))
+import Jelly.Prop ((:=), on)
 import Jelly.Signal (Signal)
-
--- type SquarePropsType m =
---   { value :: Signal SquareValueType
---   , onClick :: m Unit
---   }
-
--- squareComponent :: forall m. Component m => SquarePropsType m -> m Unit
--- squareComponent { value, onClick } = do
---   JE.button [ "class" := "square", onClick \_ -> onClick ] do
---     textSig value
+import UseCases.Calculatewinner (Board(..), SquareValue(..), Board, calculateWinner)
+-- import Web.HTML.HTMLElement (click)
+import Web.HTML.Event.EventTypes (click)
 
 type SquarePropsType m =
-  { value :: Signal Int }
+  { value :: Signal SquareValue
+  , onClick :: m Unit
+  }
 
 squareComponent :: forall m. Component m => SquarePropsType m -> m Unit
-squareComponent { value } = do
-  JE.button [ "class" := "square" ] do
+squareComponent { value, onClick } = do
+  JE.button [ "class" := "square", on click \_ -> onClick ] do
     textSig $ show <$> value
+
+-- type SquarePropsType m =
+--   { value :: Signal Int }
+
+-- squareComponent :: forall m. Component m => SquarePropsType m -> m Unit
+-- squareComponent { value } = do
+--   JE.button [ "class" := "square" ] do
+--     textSig $ show <$> value
