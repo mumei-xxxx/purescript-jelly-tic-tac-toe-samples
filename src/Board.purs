@@ -8,14 +8,14 @@ import Prelude
 import Data.Array (replicate, (!!), updateAt, modifyAt)
 import Data.Array.NonEmpty (elemLastIndex)
 import Data.HeytingAlgebra (not)
-import Data.Maybe (Maybe(..), fromMaybe, fromJust, isNothing)
+import Data.Maybe (Maybe(..), fromJust, fromMaybe, isNothing)
 import Data.Tuple.Nested ((/\))
 import Effect.Class (class MonadEffect)
 import Jelly.Component (class Component, text, textSig)
 import Jelly.Element as JE
 import Jelly.Prop ((:=))
 import Jelly.Signal (Signal, modifyChannel_, newState, readSignal, writeChannel)
-import Square (squareComponent)
+import Square (squareComponent, SquarePropsType)
 import UseCases.Calculatewinner (Board(..), SquareValue(..), Board, calculateWinner)
 
 -- renderSquareComponent :: forall m. Component m => Int -> m Unit
@@ -26,6 +26,9 @@ import UseCases.Calculatewinner (Board(..), SquareValue(..), Board, calculateWin
 -- initx ∷ Array (Maybe Int)
 -- squareArraySig = (replicate 9 (Nothing :: Maybe Int))
 
+type OnClickFuncType m = {
+    onClickFunc :: m Unit
+  }
 
 boardComponent :: forall m. Component m => m Unit
 boardComponent = do
