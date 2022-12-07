@@ -8,7 +8,7 @@ import Prelude
 import Data.Array (replicate, (!!), updateAt, modifyAt)
 import Data.Array.NonEmpty (elemLastIndex)
 import Data.HeytingAlgebra (not)
-import Data.Maybe (Maybe(..), fromJust, fromMaybe, isNothing)
+import Data.Maybe (Maybe(..), maybe,fromJust, fromMaybe, isNothing)
 import Data.Tuple.Nested ((/\))
 import Effect.Class (class MonadEffect)
 import Jelly.Component (class Component, text, textSig)
@@ -45,16 +45,16 @@ boardComponent = do
         when (isNothing winner && isNothing (squares !! i)) do
           xIsNext <- readSignal xIsNextSig
           let squareVal = Just $ if xIsNext then X else O
-              newSquares = fromMaybe squares $ updateAt i squareVal squares
+              newSquares = fromMaybe squares $ updateAt (i :: Int) squareVal squares
           writeChannel squareArrayChannel newSquares
           modifyChannel_ xIsNextChannel not
 
   let renderSquareComponent :: forall m. Component m => OnClickFuncType m -> Int -> m Unit
       renderSquareComponent { onClickFunc } valueInt = do
         squares <- readSignal squareArraySig
-        let val = squares !! valueInt
+        let val = join $ squares !! valueInt
             func = onClickFunc valueInt
-        squareComponent { onClick: func, value: val }
+        squareComponent { onClick: func, value: pure val }
 
   let playStatus :: Signal String
       playStatus = do
@@ -72,16 +72,16 @@ boardComponent = do
       textSig $ playStatus
     JE.div' do
       JE.div [ "class" := "board-row" ] do
-        renderSquareComponent { handleClick } 0
-        renderSquareComponent { handleClick } 1
-        renderSquareComponent { handleClick } 2
+        renderSquareComponent { onClickFunc: handleClick } 0
+        renderSquareComponent { onClickFunc: handleClick } 1
+        renderSquareComponent { onClickFunc: handleClick } 2
     JE.div' do
       JE.div [ "class" := "board-row" ] do
-        renderSquareComponent { handleClick } 3
-        renderSquareComponent { handleClick } 4
-        renderSquareComponent { handleClick } 5
+        renderSquareComponent { onClickFunc: handleClick } 3
+        renderSquareComponent { onClickFunc: handleClick } 4
+        renderSquareComponent { onClickFunc: handleClick } 5
     JE.div' do
       JE.div [ "class" := "board-row" ] do
-        renderSquareComponent { handleClick } 6
-        renderSquareComponent { handleClick } 7
-        renderSquareComponent { handleClick } 8
+        renderSquareComponent { onClickFunc: handleClick } 6
+        renderSquareComponent { onClickFunc: handleClick } 7
+        renderSquareComponent { onClickFunc: handleClick } 8
