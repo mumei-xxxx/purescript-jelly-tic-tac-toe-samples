@@ -8,13 +8,15 @@ import Prelude
 import Data.Array (replicate, (!!), updateAt, modifyAt)
 import Data.Array.NonEmpty (elemLastIndex)
 import Data.HeytingAlgebra (not)
-import Data.Maybe (Maybe(..), maybe,fromJust, fromMaybe, isNothing)
+import Data.Maybe (Maybe(..), maybe, fromJust, fromMaybe, isNothing)
+import Data.Number (log)
 import Data.Tuple.Nested ((/\))
 import Effect.Class (class MonadEffect)
 import Jelly.Component (class Component, text, textSig)
 import Jelly.Element as JE
 import Jelly.Prop ((:=))
 import Jelly.Signal (Signal, modifyChannel_, newState, readSignal, writeChannel)
+import Effect.Console (logShow)
 import Square (squareComponent, SquarePropsType)
 import UseCases.Calculatewinner (Board(..), SquareValue(..), Board, calculateWinner)
 
