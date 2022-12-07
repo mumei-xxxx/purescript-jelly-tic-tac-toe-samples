@@ -10,8 +10,8 @@ import Jelly.Component (class Component, textSig)
 import Jelly.Element as JE
 import Jelly.Prop ((:=), on)
 import Jelly.Signal (Signal)
-import Data.Maybe (Maybe)
-import UseCases.Calculatewinner (SquareValue)
+import Data.Maybe (Maybe(..))
+import UseCases.Calculatewinner (SquareValue(..))
 -- import Web.HTML.HTMLElement (click)
 import Web.HTML.Event.EventTypes (click)
 
@@ -22,7 +22,10 @@ type SquarePropsType m =
 squareComponent :: forall m. Component m => SquarePropsType m -> m Unit
 squareComponent { onClick, value } = do
   JE.button [ "class" := "square", on click \_ -> onClick ] do
-    textSig $ show <$> value
+    textSig $ value <#> case _ of
+      Just X -> "X"
+      Just O -> "O"
+      Nothing -> ""
 
 -- type SquarePropsType m =
 --   { value :: Signal Int }
