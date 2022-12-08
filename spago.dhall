@@ -22,6 +22,7 @@ to generate this file without the comments in this block.
   , "jelly-hooks"
   , "jelly-signal"
   , "maybe"
+  , "numbers"
   , "prelude"
   , "tuples"
   , "web-html"
