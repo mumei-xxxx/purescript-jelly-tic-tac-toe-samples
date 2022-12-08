@@ -11,15 +11,17 @@ import Data.HeytingAlgebra (not)
 import Data.Maybe (Maybe(..), maybe, fromJust, fromMaybe, isNothing)
 import Data.Number (log)
 import Data.Tuple.Nested ((/\))
+import Debug (traceM)
 import Effect.Class (class MonadEffect)
+import Effect.Console (logShow)
 import Jelly.Component (class Component, text, textSig)
 import Jelly.Element as JE
 import Jelly.Prop ((:=))
 import Jelly.Signal (Signal, modifyChannel_, newState, readSignal, writeChannel)
-import Effect.Console (logShow)
 import Square (squareComponent, SquarePropsType)
 import UseCases.Calculatewinner (Board(..), SquareValue(..), Board, calculateWinner)
 
+-- import Debug.Trace (traceM)
 -- renderSquareComponent :: forall m. Component m => Int -> m Unit
 -- renderSquareComponent valueInt = do
 --   squareComponent { value: pure valueInt }
@@ -44,6 +46,7 @@ boardComponent = do
       handleClick i = do
         squares <- readSignal squareArraySig
         let winner = calculateWinner squares
+        -- logShow "aa"
         when (isNothing winner && isNothing (squares !! i)) do
           xIsNext <- readSignal xIsNextSig
           let squareVal = Just $ if xIsNext then X else O
@@ -53,10 +56,13 @@ boardComponent = do
 
   let renderSquareComponent :: forall m. Component m => OnClickFuncType m -> Int -> m Unit
       renderSquareComponent { onClickFunc } valueInt = do
-        squares <- readSignal squareArraySig
-        let val = join $ squares !! valueInt
-            func = onClickFunc valueInt
-        squareComponent { onClick: func, value: pure val }
+        let
+          valSig = do
+            squares <- squareArraySig
+            pure $ join $ squares !! valueInt
+          func = onClickFunc valueInt
+        squareComponent { onClick: func, value: valSig }
+
 
   let playStatus :: Signal String
       playStatus = do
