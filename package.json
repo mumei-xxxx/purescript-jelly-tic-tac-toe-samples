@@ -6,10 +6,10 @@
   "scripts": {
     "install": "npx spago install",
     "bundle:script": "npx spago bundle-app -t ./public/index.js -y",
-    "bundle:scss": "sass --error-css --style=compressed ./src/index.scss ./public/index.css",
+    "bundle:scss": "sass --error-css --style=compressed ./src/style.scss ./public/style.css",
     "bundle": "run-s bundle:*",
     "watch:script": "npx spago bundle-app -t ./public/index.js -w",
-    "watch:scss": "sass --watch --error-css ./src/index.scss ./public/index.css",
+    "watch:scss": "sass --watch --error-css ./src/style.scss ./public/style.css",
     "watch:server": "npx live-server ./public",
     "watch": "run-p watch:*"
   },
