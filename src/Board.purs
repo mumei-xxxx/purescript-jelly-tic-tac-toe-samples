@@ -9,12 +9,15 @@ import Data.Array (replicate, updateAt, (!!))
 import Data.Maybe (Maybe(..), fromMaybe, isNothing)
 import Data.Tuple.Nested ((/\))
 import Effect.Class (class MonadEffect)
+import Debug
+
 import Jelly.Component (class Component, textSig)
 import Jelly.Element as JE
 import Jelly.Prop ((:=))
 import Jelly.Signal (Signal, modifyChannel_, newState, readSignal, writeChannel)
 import Square (squareComponent)
 import UseCases.Calculatewinner (Board, SquareValue(..), calculateWinner)
+
 type OnClickFuncType :: forall k. k -> Type
 type OnClickFuncType m = {
     onClickFunc :: forall m. MonadEffect m => Int -> m Unit
@@ -33,6 +36,7 @@ boardComponent = do
         squares <- readSignal squareArraySig
         let winner = calculateWinner squares
         -- logShow "aa"
+        traceM squares
         when (isNothing winner && Just Nothing == (squares !! i)) do
           xIsNext <- readSignal xIsNextSig
           let squareVal = Just $ if xIsNext then X else O
