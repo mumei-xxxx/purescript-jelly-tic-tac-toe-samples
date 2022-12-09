@@ -3174,7 +3174,7 @@
                 return "Winner: " + show2(winner.value0);
               }
               ;
-              throw new Error("Failed pattern match at Board (line 65, column 14 - line 67, column 41): " + [winner.constructor.name]);
+              throw new Error("Failed pattern match at Board (line 66, column 14 - line 68, column 41): " + [winner.constructor.name]);
             }());
           });
         });
