@@ -3090,7 +3090,11 @@
             };
           };
         };
-        var renderSquareComponent1 = renderSquareComponent(dictComponent);
+        var renderSquareComponentBuilder = renderSquareComponent(dictComponent)({
+          onClickFunc: function(dictMonadEffect) {
+            return handleClick(dictMonadEffect);
+          }
+        });
         var playStatus = bind4(v.value0)(function(squares) {
           return bind4(v1.value0)(function(xIsNext) {
             var winner = calculateWinner(squares);
@@ -3110,60 +3114,24 @@
                 return "Winner: " + show2(winner.value0);
               }
               ;
-              throw new Error("Failed pattern match at Board (line 60, column 14 - line 62, column 41): " + [winner.constructor.name]);
+              throw new Error("Failed pattern match at Board (line 61, column 14 - line 63, column 41): " + [winner.constructor.name]);
             }());
           });
         });
         return div$prime2(discard1(div$prime2(textSig2(playStatus)))(function() {
-          return discard1(div$prime2(div3([attr3("class")("board-row")])(discard1(renderSquareComponent1({
-            onClickFunc: function(dictMonadEffect) {
-              return handleClick(dictMonadEffect);
-            }
-          })(0))(function() {
-            return discard1(renderSquareComponent1({
-              onClickFunc: function(dictMonadEffect) {
-                return handleClick(dictMonadEffect);
-              }
-            })(1))(function() {
-              return renderSquareComponent1({
-                onClickFunc: function(dictMonadEffect) {
-                  return handleClick(dictMonadEffect);
-                }
-              })(2);
+          return discard1(div$prime2(div3([attr3("class")("board-row")])(discard1(renderSquareComponentBuilder(0))(function() {
+            return discard1(renderSquareComponentBuilder(1))(function() {
+              return renderSquareComponentBuilder(2);
             });
           }))))(function() {
-            return discard1(div$prime2(div3([attr3("class")("board-row")])(discard1(renderSquareComponent1({
-              onClickFunc: function(dictMonadEffect) {
-                return handleClick(dictMonadEffect);
-              }
-            })(3))(function() {
-              return discard1(renderSquareComponent1({
-                onClickFunc: function(dictMonadEffect) {
-                  return handleClick(dictMonadEffect);
-                }
-              })(4))(function() {
-                return renderSquareComponent1({
-                  onClickFunc: function(dictMonadEffect) {
-                    return handleClick(dictMonadEffect);
-                  }
-                })(5);
+            return discard1(div$prime2(div3([attr3("class")("board-row")])(discard1(renderSquareComponentBuilder(3))(function() {
+              return discard1(renderSquareComponentBuilder(4))(function() {
+                return renderSquareComponentBuilder(5);
               });
             }))))(function() {
-              return div$prime2(div3([attr3("class")("board-row")])(discard1(renderSquareComponent1({
-                onClickFunc: function(dictMonadEffect) {
-                  return handleClick(dictMonadEffect);
-                }
-              })(6))(function() {
-                return discard1(renderSquareComponent1({
-                  onClickFunc: function(dictMonadEffect) {
-                    return handleClick(dictMonadEffect);
-                  }
-                })(7))(function() {
-                  return renderSquareComponent1({
-                    onClickFunc: function(dictMonadEffect) {
-                      return handleClick(dictMonadEffect);
-                    }
-                  })(8);
+              return div$prime2(div3([attr3("class")("board-row")])(discard1(renderSquareComponentBuilder(6))(function() {
+                return discard1(renderSquareComponentBuilder(7))(function() {
+                  return renderSquareComponentBuilder(8);
                 });
               })));
             });

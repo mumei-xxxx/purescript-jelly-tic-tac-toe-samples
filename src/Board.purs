@@ -15,7 +15,7 @@ import Jelly.Prop ((:=))
 import Jelly.Signal (Signal, modifyChannel_, newState, readSignal, writeChannel)
 import Square (squareComponent)
 import UseCases.Calculatewinner (Board, SquareValue(..), calculateWinner)
-
+type OnClickFuncType :: forall k. k -> Type
 type OnClickFuncType m = {
     onClickFunc :: forall m. MonadEffect m => Int -> m Unit
   }
@@ -49,6 +49,7 @@ boardComponent = do
           func = onClickFunc valueInt
         squareComponent { onClick: func, value: valSig }
 
+  let renderSquareComponentBuilder = renderSquareComponent { onClickFunc: handleClick }
 
   let playStatus :: Signal String
       playStatus = do
@@ -66,16 +67,16 @@ boardComponent = do
       textSig $ playStatus
     JE.div' do
       JE.div [ "class" := "board-row" ] do
-        renderSquareComponent { onClickFunc: handleClick } 0
-        renderSquareComponent { onClickFunc: handleClick } 1
-        renderSquareComponent { onClickFunc: handleClick } 2
+        renderSquareComponentBuilder 0
+        renderSquareComponentBuilder 1
+        renderSquareComponentBuilder 2
     JE.div' do
       JE.div [ "class" := "board-row" ] do
-        renderSquareComponent { onClickFunc: handleClick } 3
-        renderSquareComponent { onClickFunc: handleClick } 4
-        renderSquareComponent { onClickFunc: handleClick } 5
+        renderSquareComponentBuilder 3
+        renderSquareComponentBuilder 4
+        renderSquareComponentBuilder 5
     JE.div' do
       JE.div [ "class" := "board-row" ] do
-        renderSquareComponent { onClickFunc: handleClick } 6
-        renderSquareComponent { onClickFunc: handleClick } 7
-        renderSquareComponent { onClickFunc: handleClick } 8
+        renderSquareComponentBuilder 6
+        renderSquareComponentBuilder 7
+        renderSquareComponentBuilder 8
