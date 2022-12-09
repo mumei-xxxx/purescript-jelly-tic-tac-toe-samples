@@ -5,30 +5,16 @@ module Board
 
 import Prelude
 
-import Data.Array (replicate, (!!), updateAt, modifyAt)
-import Data.Array.NonEmpty (elemLastIndex)
-import Data.HeytingAlgebra (not)
-import Data.Maybe (Maybe(..), fromJust, fromMaybe, isNothing, maybe)
-import Data.Number (log)
+import Data.Array (replicate, updateAt, (!!))
+import Data.Maybe (Maybe(..), fromMaybe, isNothing)
 import Data.Tuple.Nested ((/\))
-import Debug (traceM)
 import Effect.Class (class MonadEffect)
-import Effect.Console (logShow)
-import Jelly.Component (class Component, text, textSig)
+import Jelly.Component (class Component, textSig)
 import Jelly.Element as JE
 import Jelly.Prop ((:=))
 import Jelly.Signal (Signal, modifyChannel_, newState, readSignal, writeChannel)
-import Square (squareComponent, SquarePropsType)
-import UseCases.Calculatewinner (Board(..), SquareValue(..), Board, calculateWinner)
-
--- import Debug.Trace (traceM)
--- renderSquareComponent :: forall m. Component m => Int -> m Unit
--- renderSquareComponent valueInt = do
---   squareComponent { value: pure valueInt }
-
--- init ∷ ∀ (a8 ∷ String). Array (Maybe String)
--- initx ∷ Array (Maybe Int)
--- squareArraySig = (replicate 9 (Nothing :: Maybe Int))
+import Square (squareComponent)
+import UseCases.Calculatewinner (Board, SquareValue(..), calculateWinner)
 
 type OnClickFuncType m = {
     onClickFunc :: forall m. MonadEffect m => Int -> m Unit
