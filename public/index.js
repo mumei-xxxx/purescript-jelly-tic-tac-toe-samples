@@ -971,6 +971,62 @@
     return index(xs)(0);
   };
 
+  // output/Debug/foreign.js
+  var req = typeof module === "undefined" ? void 0 : module.require;
+  var util = function() {
+    try {
+      return req === void 0 ? void 0 : req("util");
+    } catch (e) {
+      return void 0;
+    }
+  }();
+  function _trace(x, k) {
+    if (util !== void 0) {
+      console.log(util.inspect(x, { depth: null, colors: true }));
+    } else {
+      console.log(x);
+    }
+    return k({});
+  }
+  var now = function() {
+    var perf;
+    if (typeof performance !== "undefined") {
+      perf = performance;
+    } else if (req) {
+      try {
+        perf = req("perf_hooks").performance;
+      } catch (e) {
+      }
+    }
+    return function() {
+      return (perf || Date).now();
+    };
+  }();
+
+  // output/Debug/index.js
+  var discard2 = /* @__PURE__ */ discard(discardUnit);
+  var trace = function() {
+    return function(a) {
+      return function(k) {
+        return _trace(a, k);
+      };
+    };
+  };
+  var trace1 = /* @__PURE__ */ trace();
+  var traceM = function() {
+    return function(dictMonad) {
+      var discard1 = discard2(dictMonad.Bind1());
+      var pure8 = pure(dictMonad.Applicative0());
+      return function(s) {
+        return discard1(pure8(unit))(function() {
+          return trace1(s)(function(v) {
+            return pure8(unit);
+          });
+        });
+      };
+    };
+  };
+
   // output/Control.Monad.Reader.Class/index.js
   var ask = function(dict) {
     return dict.ask;
