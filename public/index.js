@@ -474,7 +474,7 @@
     return maybe(a)(identity4);
   };
   var eqMaybe = function(dictEq) {
-    var eq3 = eq(dictEq);
+    var eq4 = eq(dictEq);
     return {
       eq: function(x) {
         return function(y) {
@@ -483,7 +483,7 @@
           }
           ;
           if (x instanceof Just && y instanceof Just) {
-            return eq3(x.value0)(y.value0);
+            return eq4(x.value0)(y.value0);
           }
           ;
           return false;
@@ -3026,6 +3026,7 @@
   };
 
   // output/Board/index.js
+  var eq3 = /* @__PURE__ */ eq(/* @__PURE__ */ eqMaybe(/* @__PURE__ */ eqMaybe(eqSquareValue)));
   var discard4 = /* @__PURE__ */ discard(discardUnit);
   var not2 = /* @__PURE__ */ not(heytingAlgebraBoolean);
   var bind4 = /* @__PURE__ */ bind(bindSignal);
@@ -3057,7 +3058,7 @@
           return function(i) {
             return bind23(readSignal3(v.value0))(function(squares) {
               var winner = calculateWinner(squares);
-              return when2(isNothing(winner) && isNothing(index(squares)(i)))(bind23(readSignal3(v1.value0))(function(xIsNext) {
+              return when2(isNothing(winner) && eq3(new Just(Nothing.value))(index(squares)(i)))(bind23(readSignal3(v1.value0))(function(xIsNext) {
                 var squareVal = new Just(function() {
                   if (xIsNext) {
                     return X.value;

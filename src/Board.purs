@@ -8,7 +8,7 @@ import Prelude
 import Data.Array (replicate, (!!), updateAt, modifyAt)
 import Data.Array.NonEmpty (elemLastIndex)
 import Data.HeytingAlgebra (not)
-import Data.Maybe (Maybe(..), maybe, fromJust, fromMaybe, isNothing)
+import Data.Maybe (Maybe(..), fromJust, fromMaybe, isNothing, maybe)
 import Data.Number (log)
 import Data.Tuple.Nested ((/\))
 import Debug (traceM)
@@ -47,7 +47,7 @@ boardComponent = do
         squares <- readSignal squareArraySig
         let winner = calculateWinner squares
         -- logShow "aa"
-        when (isNothing winner && isNothing (squares !! i)) do
+        when (isNothing winner && Just Nothing == (squares !! i)) do
           xIsNext <- readSignal xIsNextSig
           let squareVal = Just $ if xIsNext then X else O
               newSquares = fromMaybe squares $ updateAt (i :: Int) squareVal squares
