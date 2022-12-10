@@ -1,87 +1,77 @@
 module Board
   ( boardComponent
-  )
-  where
+  ) where
 
 import Prelude
 
 import Data.Array (replicate, updateAt, (!!))
-import Data.Maybe (Maybe(..), fromMaybe, isNothing)
+import Data.Maybe (Maybe(..), fromMaybe)
 import Data.Tuple.Nested ((/\))
 import Effect.Class (class MonadEffect)
 import Jelly.Component (class Component, textSig)
 import Jelly.Element as JE
 import Jelly.Prop ((:=))
-import Jelly.Signal (Signal, modifyChannel_, newState, readSignal, writeChannel)
+import Jelly.Signal (Signal, newState, readSignal, writeChannel)
 import Square (squareComponent)
-import UseCases.Calculatewinner (Board, SquareValue(..), calculateWinner)
-
--- Debug 用
-import Debug (traceM)
+import UseCases.Calculatewinner (SquareValue(..), calculateWinner, nextPlayer)
 
 type OnClickFuncType :: forall k. k -> Type
-type OnClickFuncType m = {
-    onClickFunc :: forall m. MonadEffect m => Int -> m Unit
+type OnClickFuncType m =
+  { onClickFunc :: forall m. MonadEffect m => Int -> m Unit
   }
+
+data GameState = Winner SquareValue | NextPlayer SquareValue
+
+derive instance Eq GameState
 
 boardComponent :: forall m. Component m => m Unit
 boardComponent = do
-  let initialArr :: Board
-      initialArr = replicate 9 Nothing
-  squareArraySig /\ squareArrayChannel <- newState initialArr
+  squareArraySig /\ squareArrayChannel <- newState $ replicate 9 Nothing
+  gameStateSig /\ gameStateChannel <- newState $ NextPlayer X
 
-  xIsNextSig /\ xIsNextChannel <- newState true
-
-  let handleClick :: forall m. MonadEffect m => Int -> m Unit
-      handleClick i = do
-        squares <- readSignal squareArraySig
-        let winner = calculateWinner squares
-        -- logShow "aa"
-        traceM squares
-        when (isNothing winner && Just Nothing == (squares !! i)) do
-          xIsNext <- readSignal xIsNextSig
-          let squareVal = Just $ if xIsNext then X else O
-              newSquares = fromMaybe squares $ updateAt (i :: Int) squareVal squares
+  let
+    handleClick :: MonadEffect m => Int -> m Unit
+    handleClick i = do
+      squares <- readSignal squareArraySig
+      gameState <- readSignal gameStateSig
+      case gameState of
+        Winner _ -> pure unit
+        NextPlayer p -> when ((squares !! i) == Just Nothing) do
+          let
+            newSquares = fromMaybe squares $ updateAt (i :: Int) (Just p) squares
           writeChannel squareArrayChannel newSquares
-          modifyChannel_ xIsNextChannel not
+          writeChannel gameStateChannel $ case calculateWinner newSquares of
+            Nothing -> NextPlayer $ nextPlayer p
+            Just w -> Winner w
 
-  let renderSquareComponent :: forall m. Component m => OnClickFuncType m -> Int -> m Unit
-      renderSquareComponent { onClickFunc } valueInt = do
-        let
-          valSig = do
-            squares <- squareArraySig
-            pure $ join $ squares !! valueInt
-          func = onClickFunc valueInt
-        squareComponent { onClick: func, value: valSig }
+    renderSquareComponent :: Component m => Int -> m Unit
+    renderSquareComponent valueInt = do
+      let
+        valSig = do
+          squares <- squareArraySig
+          pure $ join $ squares !! valueInt
+      squareComponent { onClick: handleClick valueInt, value: valSig }
 
-  let renderSquareComponentBuilder = renderSquareComponent { onClickFunc: handleClick }
-
-  let playStatus :: Signal String
-      playStatus = do
-        squares <- squareArraySig
-        xIsNext <- xIsNextSig
-        let
-          winner = calculateWinner squares
-          nextPlayer = if xIsNext then X else O
-        pure case winner of
-          Nothing -> "Next player: " <> show nextPlayer
-          Just w -> "Winner: " <> show w
+    playStatus :: Signal String
+    playStatus = gameStateSig <#> case _ of
+      NextPlayer p -> "Next player: " <> show p
+      Winner w -> "Winner: " <> show w
 
   JE.div' do
     JE.div' do
       textSig $ playStatus
     JE.div' do
       JE.div [ "class" := "board-row" ] do
-        renderSquareComponentBuilder 0
-        renderSquareComponentBuilder 1
-        renderSquareComponentBuilder 2
+        renderSquareComponent 0
+        renderSquareComponent 1
+        renderSquareComponent 2
     JE.div' do
       JE.div [ "class" := "board-row" ] do
-        renderSquareComponentBuilder 3
-        renderSquareComponentBuilder 4
-        renderSquareComponentBuilder 5
+        renderSquareComponent 3
+        renderSquareComponent 4
+        renderSquareComponent 5
     JE.div' do
       JE.div [ "class" := "board-row" ] do
-        renderSquareComponentBuilder 6
-        renderSquareComponentBuilder 7
-        renderSquareComponentBuilder 8
+        renderSquareComponent 6
+        renderSquareComponent 7
+        renderSquareComponent 8
