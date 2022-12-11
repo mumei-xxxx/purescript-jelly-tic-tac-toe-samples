@@ -1,4 +1,4 @@
-module Board
+module Components.Board
   ( boardComponent
   ) where
 
@@ -12,7 +12,7 @@ import Jelly.Component (class Component, textSig)
 import Jelly.Element as JE
 import Jelly.Prop ((:=))
 import Jelly.Signal (Signal, newState, readSignal, writeChannel)
-import Square (squareComponent)
+import Components.Square (squareComponent)
 import UseCases.Calculatewinner (SquareValue(..), calculateWinner, nextPlayer)
 
 type OnClickFuncType :: forall k. k -> Type
