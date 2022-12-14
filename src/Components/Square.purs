@@ -5,14 +5,15 @@ module Components.Square
   where
 
 import Prelude
+import Data.Maybe (Maybe(..))
+import Web.HTML.Event.EventTypes (click)
 
 import Jelly.Component (class Component, textSig)
 import Jelly.Element as JE
 import Jelly.Prop ((:=), on)
 import Jelly.Signal (Signal)
-import Data.Maybe (Maybe(..))
+
 import UseCases.Calculatewinner (SquareValue(..))
-import Web.HTML.Event.EventTypes (click)
 
 type SquarePropsType m =
   { onClick :: m Unit
