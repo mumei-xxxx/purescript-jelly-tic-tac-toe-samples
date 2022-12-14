@@ -1,6 +1,6 @@
 module Components.Square
   ( SquarePropsType,
-  squareComponent
+    squareComponent
   )
   where
 
@@ -12,7 +12,6 @@ import Jelly.Prop ((:=), on)
 import Jelly.Signal (Signal)
 import Data.Maybe (Maybe(..))
 import UseCases.Calculatewinner (SquareValue(..))
--- import Web.HTML.HTMLElement (click)
 import Web.HTML.Event.EventTypes (click)
 
 type SquarePropsType m =
