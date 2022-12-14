@@ -1,6 +1,6 @@
 module Components.Square
-  ( SquarePropsType,
-    squareComponent
+  ( SquarePropsType
+  , squareComponent
   )
   where
 
@@ -15,10 +15,19 @@ import Jelly.Signal (Signal)
 
 import UseCases.Calculatewinner (SquareValue(..))
 
+{-
+  squareComponent の引数の型
+  onClick clickしたときに呼び出される関数
+  升目の値 Signal かつ Maybe。X or O or Nothing
+-}
 type SquarePropsType m =
   { onClick :: m Unit
   , value :: Signal (Maybe SquareValue) }
 
+{-
+  squareComponent 三目ならべの盤のひとつの升目のComponent
+  SquarePropsType m を引数にとり、HTMLを描画する。
+-}
 squareComponent :: forall m. Component m => SquarePropsType m -> m Unit
 squareComponent { onClick, value } = do
   JE.button [ "class" := "square", on click \_ -> onClick ] do
