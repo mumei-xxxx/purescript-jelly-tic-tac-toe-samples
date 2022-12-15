@@ -3130,7 +3130,7 @@
           return "";
         }
         ;
-        throw new Error("Failed pattern match at Components.Square (line 25, column 25 - line 28, column 20): " + [v1.constructor.name]);
+        throw new Error("Failed pattern match at Components.Square (line 41, column 25 - line 44, column 20): " + [v1.constructor.name]);
       })));
     };
   };
