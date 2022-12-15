@@ -36,6 +36,8 @@ type SquarePropsType m =
 squareComponent :: forall m. Component m => SquarePropsType m -> m Unit
 squareComponent { onClick, value } = do
   JE.button [ "class" := "square", on click \_ -> onClick ] do
+    -- パターンマッチング
+    -- textSig は Signal を表示する Jelly の関数
     textSig $ value <#> case _ of
       Just X -> "X"
       Just O -> "O"
