@@ -26,7 +26,12 @@ type SquarePropsType m =
 
 {-
   squareComponent 三目ならべの盤のひとつの升目のComponent
-  SquarePropsType m を引数にとり、HTMLを描画する。
+  SquarePropsType m を引数にとり、 m Unitを返す。
+  UnitはHaskellの空のタプル()と同じ。
+  HTMLを描画する。
+  呼び出すときは、
+  squareComponent { onClick: ●●, value: ■■ }
+  のようにする。
 -}
 squareComponent :: forall m. Component m => SquarePropsType m -> m Unit
 squareComponent { onClick, value } = do
