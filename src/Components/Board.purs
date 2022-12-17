@@ -13,14 +13,14 @@ import Jelly.Element as JE
 import Jelly.Prop ((:=))
 import Jelly.Signal (Signal, newState, readSignal, writeChannel)
 import Components.Square (squareComponent)
-import UseCases.Calculatewinner (SquareValue(..), calculateWinner, nextPlayer)
+import UseCases.Calculatewinner (SquareValueType(..), calculateWinner, nextPlayer)
 
 type OnClickFuncType :: forall k. k -> Type
 type OnClickFuncType m =
   { onClickFunc :: forall m. MonadEffect m => Int -> m Unit
   }
 
-data GameState = Winner SquareValue | NextPlayer SquareValue
+data GameState = Winner SquareValueType | NextPlayer SquareValueType
 
 derive instance Eq GameState
 

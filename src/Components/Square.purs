@@ -13,7 +13,7 @@ import Jelly.Element as JE
 import Jelly.Prop ((:=), on)
 import Jelly.Signal (Signal)
 
-import UseCases.Calculatewinner (SquareValue(..))
+import UseCases.Calculatewinner (SquareValueType(..))
 
 {-
   squareComponent の引数の型
@@ -22,7 +22,7 @@ import UseCases.Calculatewinner (SquareValue(..))
 -}
 type SquarePropsType m =
   { onClick :: m Unit
-  , value :: Signal (Maybe SquareValue) }
+  , value :: Signal (Maybe SquareValueType) }
 
 {-
   squareComponent 三目ならべの盤のひとつの升目のComponent

@@ -18,10 +18,10 @@ import Components.Board (boardComponent)
 main :: Effect Unit
 main = launchAff_ do
   bodyMaybe <- awaitBody
-  liftEffect $ traverse_ (runHooks_ <<< mount component) bodyMaybe
+  liftEffect $ traverse_ (runHooks_ <<< mount rootComponent) bodyMaybe
 
-component :: forall m. Component m => m Unit
-component =
+rootComponent :: forall m. Component m => m Unit
+rootComponent =
   JE.div [ "class" := "game" ] do
     JE.div [ "class" := "game-board" ] do
       boardComponent

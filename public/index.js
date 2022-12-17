@@ -3029,7 +3029,7 @@
     O2.value = new O2();
     return O2;
   }();
-  var genericSquareValue_ = {
+  var genericSquareValueType_ = {
     to: function(x) {
       if (x instanceof Inl) {
         return X.value;
@@ -3039,7 +3039,7 @@
         return O.value;
       }
       ;
-      throw new Error("Failed pattern match at UseCases.Calculatewinner (line 32, column 1 - line 32, column 38): " + [x.constructor.name]);
+      throw new Error("Failed pattern match at UseCases.Calculatewinner (line 32, column 1 - line 32, column 42): " + [x.constructor.name]);
     },
     from: function(x) {
       if (x instanceof X) {
@@ -3050,11 +3050,11 @@
         return new Inr(NoArguments.value);
       }
       ;
-      throw new Error("Failed pattern match at UseCases.Calculatewinner (line 32, column 1 - line 32, column 38): " + [x.constructor.name]);
+      throw new Error("Failed pattern match at UseCases.Calculatewinner (line 32, column 1 - line 32, column 42): " + [x.constructor.name]);
     }
   };
-  var showSquareValue = {
-    show: /* @__PURE__ */ genericShow(genericSquareValue_)(/* @__PURE__ */ genericShowSum(/* @__PURE__ */ genericShowConstructor2({
+  var showSquareValueType = {
+    show: /* @__PURE__ */ genericShow(genericSquareValueType_)(/* @__PURE__ */ genericShowSum(/* @__PURE__ */ genericShowConstructor2({
       reflectSymbol: function() {
         return "X";
       }
@@ -3064,7 +3064,7 @@
       }
     })))
   };
-  var eqSquareValue = {
+  var eqSquareValueType = {
     eq: function(x) {
       return function(y) {
         if (x instanceof X && y instanceof X) {
@@ -3079,7 +3079,7 @@
       };
     }
   };
-  var eq2 = /* @__PURE__ */ eq(/* @__PURE__ */ eqMaybe(/* @__PURE__ */ eqMaybe(eqSquareValue)));
+  var eq2 = /* @__PURE__ */ eq(/* @__PURE__ */ eqMaybe(/* @__PURE__ */ eqMaybe(eqSquareValueType)));
   var nextPlayer = function(v) {
     if (v instanceof X) {
       return O.value;
@@ -3137,8 +3137,8 @@
 
   // output/Components.Board/index.js
   var mapFlipped5 = /* @__PURE__ */ mapFlipped(functorSignal);
-  var show2 = /* @__PURE__ */ show(showSquareValue);
-  var eq12 = /* @__PURE__ */ eq(/* @__PURE__ */ eqMaybe(/* @__PURE__ */ eqMaybe(eqSquareValue)));
+  var show2 = /* @__PURE__ */ show(showSquareValueType);
+  var eq12 = /* @__PURE__ */ eq(/* @__PURE__ */ eqMaybe(/* @__PURE__ */ eqMaybe(eqSquareValueType)));
   var discard4 = /* @__PURE__ */ discard(discardUnit);
   var bind4 = /* @__PURE__ */ bind(bindSignal);
   var pure5 = /* @__PURE__ */ pure(applicativeSignal);
@@ -3887,14 +3887,14 @@
   var attr4 = /* @__PURE__ */ attr(attrValueString);
   var liftEffect6 = /* @__PURE__ */ liftEffect(monadEffectAff);
   var traverse_2 = /* @__PURE__ */ traverse_(applicativeEffect)(foldableMaybe);
-  var component = function(dictComponent) {
+  var rootComponent = function(dictComponent) {
     var div3 = div2(dictComponent);
     return div3([attr4("class")("game")])(div3([attr4("class")("game-board")])(boardComponent(dictComponent)));
   };
-  var component1 = /* @__PURE__ */ component(componentHydrateM);
+  var rootComponent1 = /* @__PURE__ */ rootComponent(componentHydrateM);
   var main = /* @__PURE__ */ launchAff_(/* @__PURE__ */ bind(bindAff)(awaitBody)(function(bodyMaybe) {
     return liftEffect6(traverse_2(function() {
-      var $10 = mount(component1);
+      var $10 = mount(rootComponent1);
       return function($11) {
         return runHooks_($10($11));
       };
