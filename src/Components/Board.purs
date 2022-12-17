@@ -36,13 +36,13 @@ boardComponent = do
       gameState <- readSignal gameStateSig
       case gameState of
         Winner _ -> pure unit
-        NextPlayer p -> when ((squares !! i) == Just Nothing) do
+        NextPlayer player -> when ((squares !! i) == Just Nothing) do
           let
-            newSquares = fromMaybe squares $ updateAt (i :: Int) (Just p) squares
+            newSquares = fromMaybe squares $ updateAt (i :: Int) (Just player) squares
           writeChannel squareArrayChannel newSquares
           writeChannel gameStateChannel $ case calculateWinner newSquares of
-            Nothing -> NextPlayer $ nextPlayer p
-            Just w -> Winner w
+            Nothing -> NextPlayer $ nextPlayer player
+            Just winner -> Winner winner
 
     renderSquareComponent :: Component m => Int -> m Unit
     renderSquareComponent valueInt = do

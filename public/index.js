@@ -3215,13 +3215,13 @@
                           return new Winner(v2.value0);
                         }
                         ;
-                        throw new Error("Failed pattern match at Components.Board (line 43, column 43 - line 45, column 31): " + [v2.constructor.name]);
+                        throw new Error("Failed pattern match at Components.Board (line 43, column 43 - line 45, column 41): " + [v2.constructor.name]);
                       }());
                     });
                   }());
                 }
                 ;
-                throw new Error("Failed pattern match at Components.Board (line 37, column 7 - line 45, column 31): " + [gameState.constructor.name]);
+                throw new Error("Failed pattern match at Components.Board (line 37, column 7 - line 45, column 41): " + [gameState.constructor.name]);
               });
             });
           };
