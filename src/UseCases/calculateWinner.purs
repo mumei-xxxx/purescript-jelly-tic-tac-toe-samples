@@ -3,7 +3,6 @@ module UseCases.Calculatewinner
   , SquareValueType(..)
   , calculateWinner
   , lines
-  , nextPlayer
   ) where
 
 import Control.Alternative (guard)
@@ -80,7 +79,4 @@ calculateWinner boardArr = head do
   guard $ all (\i -> boardArr !! i == Just (Just sv)) line
   pure sv
 
-nextPlayer :: SquareValueType -> SquareValueType
-nextPlayer = case _ of
-  X -> O
-  O -> X
+

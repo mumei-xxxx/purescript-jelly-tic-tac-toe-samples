@@ -3039,7 +3039,7 @@
         return O.value;
       }
       ;
-      throw new Error("Failed pattern match at UseCases.Calculatewinner (line 32, column 1 - line 32, column 42): " + [x.constructor.name]);
+      throw new Error("Failed pattern match at UseCases.Calculatewinner (line 31, column 1 - line 31, column 42): " + [x.constructor.name]);
     },
     from: function(x) {
       if (x instanceof X) {
@@ -3050,7 +3050,7 @@
         return new Inr(NoArguments.value);
       }
       ;
-      throw new Error("Failed pattern match at UseCases.Calculatewinner (line 32, column 1 - line 32, column 42): " + [x.constructor.name]);
+      throw new Error("Failed pattern match at UseCases.Calculatewinner (line 31, column 1 - line 31, column 42): " + [x.constructor.name]);
     }
   };
   var showSquareValueType = {
@@ -3080,17 +3080,6 @@
     }
   };
   var eq2 = /* @__PURE__ */ eq(/* @__PURE__ */ eqMaybe(/* @__PURE__ */ eqMaybe(eqSquareValueType)));
-  var nextPlayer = function(v) {
-    if (v instanceof X) {
-      return O.value;
-    }
-    ;
-    if (v instanceof O) {
-      return X.value;
-    }
-    ;
-    throw new Error("Failed pattern match at UseCases.Calculatewinner (line 84, column 14 - line 86, column 9): " + [v.constructor.name]);
-  };
   var lines = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
   var calculateWinner = function(boardArr) {
     return head(bind3(lines)(function(line) {
@@ -3164,6 +3153,17 @@
     };
     return NextPlayer2;
   }();
+  var nextPlayer = function(v) {
+    if (v instanceof X) {
+      return O.value;
+    }
+    ;
+    if (v instanceof O) {
+      return X.value;
+    }
+    ;
+    throw new Error("Failed pattern match at Components.Board (line 24, column 14 - line 26, column 9): " + [v.constructor.name]);
+  };
   var boardComponent = function(dictComponent) {
     var MonadEffect0 = dictComponent.MonadHooks0().MonadEffect0();
     var Monad0 = MonadEffect0.Monad0();
@@ -3191,7 +3191,7 @@
             return "Winner: " + show2(v2.value0);
           }
           ;
-          throw new Error("Failed pattern match at Components.Board (line 56, column 35 - line 58, column 39): " + [v2.constructor.name]);
+          throw new Error("Failed pattern match at Components.Board (line 61, column 35 - line 63, column 39): " + [v2.constructor.name]);
         });
         var handleClick = function(dictMonadEffect) {
           return function(i) {
@@ -3215,13 +3215,13 @@
                           return new Winner(v2.value0);
                         }
                         ;
-                        throw new Error("Failed pattern match at Components.Board (line 43, column 43 - line 45, column 41): " + [v2.constructor.name]);
+                        throw new Error("Failed pattern match at Components.Board (line 48, column 43 - line 50, column 41): " + [v2.constructor.name]);
                       }());
                     });
                   }());
                 }
                 ;
-                throw new Error("Failed pattern match at Components.Board (line 37, column 7 - line 45, column 41): " + [gameState.constructor.name]);
+                throw new Error("Failed pattern match at Components.Board (line 42, column 7 - line 50, column 41): " + [gameState.constructor.name]);
               });
             });
           };
