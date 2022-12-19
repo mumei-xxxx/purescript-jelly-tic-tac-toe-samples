@@ -1,5 +1,25 @@
-# purescript-sanmoku-dev0
+# jelly-tic-tac-toe-without-timemachine
+
 PureScript三目並べ開発用
+
+## Setup
+
+Set Node.js Version.<br>
+See `.node-version`
+
+```
+npm install
+```
+
+```
+npx spago init
+```
+
+```
+npm run watch
+```
+
+## 参考
 
 Dart Sass Command-Line Interface
 https://sass-lang.com/documentation/cli/dart-sass
