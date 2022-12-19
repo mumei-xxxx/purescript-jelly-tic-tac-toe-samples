@@ -52,6 +52,7 @@ boardComponent = do
     renderSquareComponent :: Component m => Int -> m Unit
     renderSquareComponent valueInt = do
       let
+        valSig :: Signal (Maybe SquareValueType)
         valSig = do
           squares <- squareArraySig
           pure $ join $ squares !! valueInt
@@ -59,8 +60,8 @@ boardComponent = do
 
     playStatus :: Signal String
     playStatus = gameStateSig <#> case _ of
-      NextPlayer p -> "Next player: " <> show p
-      Winner w -> "Winner: " <> show w
+      NextPlayer player -> "Next player: " <> show player
+      Winner winner -> "Winner: " <> show winner
 
   JE.div' do
     JE.div' do
