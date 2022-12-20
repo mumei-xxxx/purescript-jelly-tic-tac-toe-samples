@@ -43,16 +43,16 @@ type Board = Array (Maybe SquareValueType)
   https://pursuit.purescript.org/packages/purescript-arrays/7.1.0/docs/Data.Array#v:all
 -}
 -- pred :: Array Int -> SquareValueType -> Boolean
--- pred line sv = all (\i -> boardArr !! i == Just (Just sv)) line
+-- pred line squareValue = all (\i -> boardArr !! i == Just (Just squareValue)) line
 
 -- | すべての Line, SquareValueType の組み合わせについて pred を評価する
 -- checked :: Array (Maybe SquareValueType)
 -- checked = do
 --   line <- lines
---   sv <- [ X, O ]
+--   squareValue <- [ X, O ]
 --   pure
---     if pred line sv then
---       Just sv
+--     if pred line squareValue then
+--       Just squareValue
 --     else
 --       Nothing
 -- in
@@ -75,8 +75,8 @@ type Board = Array (Maybe SquareValueType)
 calculateWinner :: Board -> Maybe SquareValueType
 calculateWinner boardArr = head do
   line <- lines
-  sv <- [ X, O ]
-  guard $ all (\i -> boardArr !! i == Just (Just sv)) line
-  pure sv
+  squareValue <- [ X, O ]
+  guard $ all (\i -> boardArr !! i == Just (Just squareValue)) line
+  pure squareValue
 
 

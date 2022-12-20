@@ -51,16 +51,16 @@ calculateWinner1 boardArr =
   let
     -- | ある Line が同じ SquareValue で埋まっているかどうか判定する
     pred :: Array Int -> SquareValue -> Boolean
-    pred line sv = all (\i -> boardArr !! i == Just (Just sv)) line
+    pred line squareValue = all (\i -> boardArr !! i == Just (Just squareValue)) line
 
     -- | すべての Line, SquareValue の組み合わせについて pred を評価する
     checked :: Array (Maybe SquareValue)
     checked = do
       line <- lines
-      sv <- [ X, O ]
+      squareValue <- [ X, O ]
       pure
-        if pred line sv then
-          Just sv
+        if pred line squareValue then
+          Just squareValue
         else
           Nothing
   in
@@ -74,16 +74,16 @@ calculateWinner2 boardArr =
   let
     -- | ある Line が同じ SquareValue で埋まっているかどうか判定する
     pred :: Array Int -> SquareValue -> Boolean
-    pred line sv = all (\i -> boardArr !! i == Just (Just sv)) line
+    pred line squareValue = all (\i -> boardArr !! i == Just (Just squareValue)) line
 
     -- | すべての Line, SquareValue の組み合わせについて pred を評価する
     -- | false ならそれはスキップする
     checked :: Array SquareValue
     checked = do
       line <- lines
-      sv <- [ X, O ]
-      guard $ pred line sv
-      pure sv
+      squareValue <- [ X, O ]
+      guard $ pred line squareValue
+      pure squareValue
   in
     head checked
 
@@ -97,8 +97,8 @@ calculateWinner2 boardArr =
 calculateWinner :: Board -> Maybe SquareValueType
 calculateWinner boardArr = head do
   line <- lines
-  sv <- [ X, O ]
-  guard $ all (\i -> boardArr !! i == Just (Just sv)) line
-  pure sv
+  squareValue <- [ X, O ]
+  guard $ all (\i -> boardArr !! i == Just (Just squareValue)) line
+  pure squareValue
 
 
