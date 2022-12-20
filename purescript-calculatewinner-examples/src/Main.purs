@@ -1,15 +1,10 @@
 module Main where
-  ( Board
-  , SquareValueType(..)
-  , calculateWinner
-  , lines
-  ) where
 
-import Prelude (class Eq, class Ord, class Show, bind, discard, pure, ($), (==))
+import Prelude (class Eq, class Ord, class Show, bind, discard, pure, ($), (==), join)
 import Control.Alternative (guard)
-import Data.Array (all, head, (!!))
+import Data.Array (all, head, (!!), find)
 import Data.Generic.Rep (class Generic)
-import Data.Maybe (Maybe(..))
+import Data.Maybe (Maybe(..), isJust)
 import Data.Show.Generic (genericShow)
 
 lines :: Array (Array Int)
@@ -46,15 +41,15 @@ type Board = Array (Maybe SquareValueType)
 -}
 
 
-calculateWinner1 :: Board -> Maybe SquareValue
+calculateWinner1 :: Board -> Maybe SquareValueType
 calculateWinner1 boardArr =
   let
-    -- | ある Line が同じ SquareValue で埋まっているかどうか判定する
-    pred :: Array Int -> SquareValue -> Boolean
+    -- | ある Line が同じ SquareValueType で埋まっているかどうか判定する
+    pred :: Array Int -> SquareValueType -> Boolean
     pred line squareValue = all (\i -> boardArr !! i == Just (Just squareValue)) line
 
-    -- | すべての Line, SquareValue の組み合わせについて pred を評価する
-    checked :: Array (Maybe SquareValue)
+    -- | すべての Line, SquareValueType の組み合わせについて pred を評価する
+    checked :: Array (Maybe SquareValueType)
     checked = do
       line <- lines
       squareValue <- [ X, O ]
@@ -65,20 +60,20 @@ calculateWinner1 boardArr =
           Nothing
   in
     -- | checked の中で一番最初に Just が出てきたものを返す
-    -- | find で帰ってくるのは Maybe (Maybe SquareValue) なので、join で一つ unwrap する
+    -- | find で帰ってくるのは Maybe (Maybe SquareValueType) なので、join で一つ unwrap する
     join $ find isJust checked
 
 
-calculateWinner2 :: Board -> Maybe SquareValue
+calculateWinner2 :: Board -> Maybe SquareValueType
 calculateWinner2 boardArr =
   let
-    -- | ある Line が同じ SquareValue で埋まっているかどうか判定する
-    pred :: Array Int -> SquareValue -> Boolean
+    -- | ある Line が同じ SquareValueType で埋まっているかどうか判定する
+    pred :: Array Int -> SquareValueType -> Boolean
     pred line squareValue = all (\i -> boardArr !! i == Just (Just squareValue)) line
 
-    -- | すべての Line, SquareValue の組み合わせについて pred を評価する
+    -- | すべての Line, SquareValueType の組み合わせについて pred を評価する
     -- | false ならそれはスキップする
-    checked :: Array SquareValue
+    checked :: Array SquareValueType
     checked = do
       line <- lines
       squareValue <- [ X, O ]
