@@ -68,8 +68,8 @@ type Board = Array (Maybe SquareValueType)
 {-
   [X, O, Nothing, X, O, O, X, O, O]
   [Just X, Just O, Nothing, Just X, Just O, Just O, Just X, Just O, Just O]
-
-  calculateWinner $ map Just [X, O, X, X, O, O, X, O, O]
+> import Data.Maybe
+> calculateWinner $ map Just [X, O, X, X, O, O, X, O, O]
 (Just X)
 -}
 calculateWinner :: Board -> Maybe SquareValueType
