@@ -5,12 +5,12 @@ module UseCases.Calculatewinner
   , lines
   ) where
 
+import Prelude (class Eq, class Ord, class Show, bind, discard, pure, ($), (==))
 import Control.Alternative (guard)
 import Data.Array (all, head, (!!))
 import Data.Generic.Rep (class Generic)
 import Data.Maybe (Maybe(..))
 import Data.Show.Generic (genericShow)
-import Prelude (class Eq, class Ord, class Show, bind, discard, pure, ($), (==))
 
 lines :: Array (Array Int)
 lines =
