@@ -42,11 +42,3 @@ squareComponent { onClick, value } = do
       Just X -> "X"
       Just O -> "O"
       Nothing -> ""
-
--- type SquarePropsType m =
---   { value :: Signal Int }
-
--- squareComponent :: forall m. Component m => SquarePropsType m -> m Unit
--- squareComponent { value } = do
---   JE.button [ "class" := "square" ] do
---     textSig $ show <$> value

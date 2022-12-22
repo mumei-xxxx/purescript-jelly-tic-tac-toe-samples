@@ -15,11 +15,6 @@ import Jelly.Signal (Signal, newState, readSignal, writeChannel)
 import Components.Square (squareComponent)
 import UseCases.Calculatewinner (SquareValueType(..), calculateWinner)
 
--- type OnClickFuncType :: forall k. k -> Type
--- type OnClickFuncType m =
---   { onClickFunc :: forall m. MonadEffect m => Int -> m Unit
---   }
-
 nextPlayer :: SquareValueType -> SquareValueType
 nextPlayer = case _ of
   X -> O
